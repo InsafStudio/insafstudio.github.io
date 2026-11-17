@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инсаф Студио — Панель управления</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/BKTj140N/image.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/BKTj140N/image.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #08080c;
+            --text-color: #f3f4f6;
+            --header-bg: rgba(15, 15, 23, 0.75);
+            --card-bg: rgba(22, 22, 33, 0.7);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-text-muted: #9ca3af;
+            --modal-bg: #11111a;
+            --accent-color: #ff0055;
+            --glow-effect: 0 0 20px rgba(255, 0, 85, 0.35);
+            --glass-blur: blur(12px);
+            --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --border-radius-base: 16px;
+            --border-radius-round: 30px;
+        }
+
+        /* --- КЛАССИЧЕСКАЯ ТЕМА --- */
+        body.classic-theme {
+            --bg-color: #0f0f0f;
+            --text-color: #ffffff;
+            --header-bg: #1a1a1a;
+            --card-bg: #1c1c1c;
+            --card-border: #2b2b2b;
+            --card-text-muted: #aaaaaa;
+            --modal-bg: #242424;
+            --border-radius-base: 12px;
+            --border-radius-round: 25px;
+            background-image: none !important;
+        }
+        body.classic-theme header {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid var(--card-border);
+        }
+        body.classic-theme .lock-card, body.classic-theme .admin-card {
+            backdrop-filter: none !important;
+            border: 2px solid var(--card-border);
+        }
+        body.classic-theme .section-divider::before {
+            background: #1c1c1c;
+        }
+
+        /* --- СВЕТЛАЯ ТЕМА --- */
+        body.light-theme {
+            --bg-color: #f4f6fa;
+            --text-color: #111827;
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --card-text-muted: #4b5563;
+            --modal-bg: #ffffff;
+        }
+        body.light-theme .admin-label { color: #111827 !important; }
+        body.light-theme .admin-input, body.light-theme .admin-select, body.light-theme .admin-textarea { background: #fff; color: #111827; }
+        body.light-theme .item-card { background: #fff; }
+
+        /* --- МАЙНКРАФТ ТЕМА --- */
+        body.minecraft-theme {
+            --bg-color: #4a3b2c;
+            --text-color: #ffff55;
+            --header-bg: #31261b;
+            --card-bg: #2a1e12;
+            --card-border: #140e08;
+            --card-text-muted: #aaaaaa;
+            --modal-bg: #3a2f23;
+            --site-font: 'Press Start 2P', monospace;
+            --border-radius-base: 0px;
+            --border-radius-round: 0px;
+        }
+        body.minecraft-theme * { font-family: var(--site-font) !important; letter-spacing: -0.5px; }
+        body.minecraft-theme .admin-panel-title { font-size: 14px !important; text-shadow: 2px 2px #000; }
+        body.minecraft-theme .admin-label, body.minecraft-theme .admin-input, body.minecraft-theme .admin-select, body.minecraft-theme .admin-textarea, body.minecraft-theme .admin-submit-btn, body.minecraft-theme .back-btn, body.minecraft-theme .btn-control { font-size: 8px !important; }
+        body.minecraft-theme .item-card { background: #1a130b; border-radius: 0; border: 2px solid #140e08; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); }
+        body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; background-image: radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.03) 0%, transparent 50%); }
+
+        header { background-color: var(--header-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--card-border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); }
+        .header-title-block { display: flex; align-items: center; gap: 10px; }
+        .admin-logo-icon { font-size: 20px; text-shadow: var(--glow-effect); }
+        .admin-panel-title { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, #fff, var(--card-text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        body.light-theme .admin-panel-title { background: none; -webkit-background-clip: initial; -webkit-text-fill-color: initial; color: #111827; }
+        
+        .back-btn { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--card-border); padding: 8px 16px; border-radius: var(--border-radius-round); text-decoration: none; font-size: 13px; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .back-btn:hover { border-color: var(--accent-color); box-shadow: var(--glow-effect); transform: translateX(-2px); }
+
+        .admin-container { max-width: 650px; width: 100%; margin: 30px auto; padding: 0 20px; flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 25px; }
+        
+        .lock-card, .admin-card { background: var(--card-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--card-border); border-radius: var(--border-radius-base); width: 100%; padding: 26px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .lock-card { text-align: center; }
+        .admin-card { display: none; }
+        .lock-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+        .admin-label { font-size: 13px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 6px; }
+        
+        .admin-input, .admin-select, .admin-textarea { width: 100%; padding: 12px 16px; background-color: rgba(0,0,0,0.25); border: 1px solid var(--card-border); border-radius: var(--border-radius-base); color: #fff; font-size: 14px; font-weight: 500; outline: none; transition: all 0.2s; }
+        .admin-textarea { resize: vertical; min-height: 80px; }
+        .admin-input:focus, .admin-select:focus, .admin-textarea:focus { border-color: var(--accent-color); box-shadow: 0 0 12px rgba(255,0,85,0.2); background: rgba(0,0,0,0.35); }
+        
+        .admin-submit-btn { background: linear-gradient(135deg, var(--accent-color), #bc003f); color: white; border: none; padding: 13px; width: 100%; border-radius: var(--border-radius-round); cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.25s; box-shadow: var(--glow-effect); text-shadow: 0 1px 2px rgba(0,0,0,0.2); margin-top: 5px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .admin-submit-btn:hover { transform: translateY(-1px); box-shadow: 0 0 25px var(--accent-color); }
+
+        .btn-cancel { background: rgba(255,255,255,0.1); border: 1px solid var(--card-border); color: white; display: none; margin-top: 8px; }
+        .btn-cancel:hover { background: rgba(255,255,255,0.15); }
+
+        .section-divider { height: 1px; background: var(--card-border); margin: 25px 0; position: relative; }
+        .section-divider::before { content: attr(data-text); position: absolute; top: -10px; left: 20px; background: #161621; padding: 0 10px; font-size: 11px; font-weight: 600; color: var(--card-text-muted); border-radius: 4px; }
+        body.light-theme .section-divider::before { background: #fff; }
+        body.minecraft-theme .section-divider::before { background: #2a1e12; top: -6px; }
+
+        .list-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; max-height: 300px; overflow-y: auto; padding-right: 5px; }
+        .item-card { background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); padding: 12px 16px; border-radius: var(--border-radius-base); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .item-info { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+        .item-title { font-size: 14px; font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+        .item-meta { font-size: 11px; color: var(--card-text-muted); }
+        .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        
+        .btn-control { border: none; padding: 6px 12px; border-radius: var(--border-radius-round); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; color: white; display: inline-flex; align-items: center; gap: 4px; }
+        .btn-edit { background: #2563eb; } .btn-edit:hover { background: #3b82f6; box-shadow: 0 0 10px rgba(59,130,246,0.4); }
+        .btn-del { background: #dc2626; } .btn-del:hover { background: #ef4444; box-shadow: 0 0 10px rgba(239,68,68,0.4); }
+        .btn-role-admin { background: #16a34a; } .btn-role-admin:hover { background: #22c55e; box-shadow: 0 0 10px rgba(34,197,94,0.4); }
+        .btn-role-user { background: #d97706; } .btn-role-user:hover { background: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.4); }
+
+        footer { text-align: center; padding: 20px; font-size: 12px; color: var(--card-text-muted); border-top: 1px solid var(--card-border); background: rgba(4,4,6,0.3); width: 100%; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title-block">
+            <span class="admin-logo-icon">🛠️</span>
+            <h1 class="admin-panel-title">Панель управления</h1>
+        </div>
+        <a href="index.html" class="back-btn">⬅ На сайт</a>
+    </header>
+
+    <div class="admin-container">
+        <div class="lock-card" id="auth-lock-screen">
+            <span class="lock-icon" id="lock-icon-status"><i class="fas fa-shield-alt fa-spin" style="color: var(--accent-color);"></i></span>
+            <div id="auth-status-message" style="font-size: 14px; font-weight: 600; margin-bottom: 15px;">Проверка авторизации...</div>
+            
+            <div id="admin-login-form" style="display: none; text-align: left; flex-direction: column; gap: 12px; max-width: 320px; margin: 0 auto;">
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label class="admin-label">📧 Email администратора:</label>
+                    <input type="email" id="admin-email" class="admin-input" placeholder="admin@example.com">
+                </div>
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label class="admin-label">🔒 Пароль:</label>
+                    <input type="password" id="admin-password" class="admin-input" placeholder="••••••••" onkeydown="if(event.key === 'Enter') window.loginAsAdmin()">
+                </div>
+                <button class="admin-submit-btn" id="btn-login-submit" onclick="window.loginAsAdmin()">Войти в панель</button>
+            </div>
+        </div>
+
+        <div class="admin-card" id="admin-workspace">
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--accent-color); display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-tools"></i> Технические работы
+            </h3>
+            
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--card-border); border-radius: var(--border-radius-base); padding: 15px; margin-bottom: 20px;">
+                <p style="font-size: 13px; margin-bottom: 10px;">Статус сайта: <b id="maintenance-status-text">Загрузка...</b></p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button class="admin-submit-btn" id="maint-on-btn" style="margin-top: 0; background: #dc2626;">🔴 Включить тех. работы</button>
+                    <button class="admin-submit-btn" id="maint-off-btn" style="margin-top: 0; background: #16a34a;">🟢 Выключить тех. работы</button>
+                </div>
+            </div>
+
+            <div class="section-divider" data-text="Управление марафоном"></div>
+
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--accent-color); display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-calendar-alt"></i> Календарь дней марафона (15:00 МСК)
+            </h3>
+            <p style="font-size: 12px; color: var(--card-text-muted); margin-bottom: 15px;">Настройка времени релиза и прямых ссылок на видео для каждого дня марафона.</p>
+            
+            <div id="admin-marathon-editor-container" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
+                <div style="text-align: center; color: var(--card-text-muted);">Загрузка дней марафона...</div>
+            </div>
+
+            <button class="admin-submit-btn" id="save-marathon-btn">💾 Сохранить изменения марафона</button>
+
+            <div class="section-divider" data-text="Управление уведомлениями"></div>
+
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--accent-color); display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-bell"></i> Управление напоминалкой
+            </h3>
+            
+            <div class="form-group">
+                <label class="admin-label">🔔 Заголовок объявления:</label>
+                <input type="text" id="remind-title" class="admin-input" placeholder="Например: Новый сериал! или Стрим начался!">
+            </div>
+
+            <div class="form-group">
+                <label class="admin-label">📝 Текст напоминалки:</label>
+                <textarea id="remind-text" class="admin-textarea" placeholder="Например: Вышла 1 серия сериала «Ильфат». Скорее переходи во вкладку Сериалы и Фильмы!"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="admin-label">⏱ Сколько часов показывать напоминалку?</label>
+                <select id="remind-duration" class="admin-select">
+                    <option value="1">1 час</option>
+                    <option value="3">3 часа</option>
+                    <option value="6">6 часов</option>
+                    <option value="12">12 часов</option>
+                    <option value="24" selected>24 часа (1 день)</option>
+                    <option value="48">48 часов (2 дня)</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <button class="admin-submit-btn" id="save-remind-btn" style="margin-top: 0;">🚀 Запустить напоминалку</button>
+                <button class="admin-submit-btn btn-del" id="delete-remind-btn" style="margin-top: 0; background: #dc2626;">🗑 Снять её</button>
+            </div>
+
+            <div class="section-divider" data-text="Управление контентом сайта"></div>
+
+            <h3 id="video-form-title" style="font-size: 15px; margin-bottom: 12px; color: var(--accent-color);">🎬 Добавить новое видео</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label class="admin-label">🔗 Подссылка (ID документа):</label>
+                    <input type="text" id="video-custom-id" class="admin-input" placeholder="Например: 1 или ep1 (ссылка ?v=...)">
+                </div>
+                <div class="form-group">
+                    <label class="admin-label">🔢 Порядок (Порядочность):</label>
+                    <input type="number" id="video-order" class="admin-input" placeholder="1, 2, 3...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="admin-label">🎬 Название видео:</label>
+                <input type="text" id="video-title" class="admin-input" placeholder="Например: Крутой летсплей по Minecraft">
+            </div>
+
+            <div class="form-group">
+                <label class="admin-label">🔗 Ссылка на видео / Код плеера:</label>
+                <input type="text" id="video-url" class="admin-input" placeholder="Вставь ссылку на .mp4 или iframe код плеера">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label class="admin-label">📁 Категория:</label>
+                    <select id="video-category" class="admin-select">
+                        <option value="loading">Загрузка категорий...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="admin-label">🏷️ Тип контента:</label>
+                    <select id="video-type" class="admin-select">
+                        <option value="video">Одиночное видео</option>
+                        <option value="series">Сериал</option>
+                        <option value="movie">Фильм</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="admin-label">📝 Описание видео:</label>
+                <textarea id="video-desc" class="admin-textarea" placeholder="Напиши подробное описание, о чём этот ролик..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="admin-label">👤 Студия / Автор публикации:</label>
+                <input type="text" id="video-src" class="admin-input" value="Инсаф Студио">
+            </div>
+
+            <button class="admin-submit-btn" id="publish-btn">🚀 Опубликовать на сайт</button>
+            <button class="admin-submit-btn btn-cancel" id="cancel-video-edit-btn">❌ Отменить редактирование</button>
+
+            <div class="section-divider" data-text="Управление категориями"></div>
+
+            <h3 id="cat-form-title" style="font-size: 15px; margin-bottom: 12px; color: var(--accent-color);">📁 Создать новую категорию</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label class="admin-label">✨ Имя категории:</label>
+                    <input type="text" id="new-cat-name" class="admin-input" placeholder="Например: Стримы">
+                </div>
+                <div class="form-group">
+                    <label class="admin-label">⚙️ ID категории (En):</label>
+                    <input type="text" id="new-cat-id" class="admin-input" placeholder="Например: streams">
+                </div>
+            </div>
+            <button class="admin-submit-btn" id="create-cat-btn" style="background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); box-shadow: none;">➕ Создать новую категорию</button>
+            <button class="admin-submit-btn btn-cancel" id="cancel-cat-edit-btn">❌ Отменить редактирование</button>
+        </div>
+
+        <div class="admin-card" id="manage-users-card">
+            <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--accent-color); display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-users-cog"></i> Управление администраторами
+            </h3>
+            <div class="list-container" id="admin-users-list">Загрузка пользователей...</div>
+        </div>
+
+        <div class="admin-card" id="manage-videos-card">
+            <h3 style="font-size: 16px; margin-bottom: 10px;">📝 Управление созданными видео</h3>
+            <div class="list-container" id="admin-videos-list">Загрузка видео...</div>
+        </div>
+
+        <div class="admin-card" id="manage-cats-card">
+            <h3 style="font-size: 16px; margin-bottom: 10px;">📁 Управление категориями</h3>
+            <div class="list-container" id="admin-cats-list">Загрузка категорий...</div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Инсаф Студио. Панель Администратора.
+    </footer>
+
+    <script>
+        (function syncThemeAndAccent() {
+            const savedTheme = localStorage.getItem('siteTheme') || 'dark';
+            document.body.classList.remove('light-theme', 'dark-theme', 'minecraft-theme', 'classic-theme');
+            if (savedTheme !== 'dark') document.body.classList.add(savedTheme + '-theme');
+            
+            const savedColor = localStorage.getItem('accentColor') || '#ff0055';
+            document.documentElement.style.setProperty('--accent-color', savedColor);
+            document.documentElement.style.setProperty('--glow-effect', '0 0 20px ' + savedColor + '59');
+        })();
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
+          authDomain: "insaf-backend.firebaseapp.com",
+          projectId: "insaf-backend",
+          storageBucket: "insaf-backend.firebasestorage.app",
+          messagingSenderId: "767081007202",
+          appId: "1:767081007202:web:f511d4fd8f20b9af87e93b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        let editingVideoId = null;
+        let editingCatId = null;
+
+        let loadedVideos = {};
+        let loadedCats = {};
+        let loadedUsers = {};
+        let currentMarathonDays = [];
+
+        async function checkAdminRole(user) {
+            const statusMessage = document.getElementById('auth-status-message');
+            const lockIcon = document.getElementById('lock-icon-status');
+            
+            try {
+                statusMessage.innerText = "⏳ Проверка прав администратора...";
+                const userDocRef = doc(db, "users", user.uid);
+                const userSnapshot = await getDoc(userDocRef);
+
+                if (userSnapshot.exists() && userSnapshot.data().role === 'admin') {
+                    showWorkspace();
+                    loadAdminData();
+                    initMaintenanceListener();
+                    loadMarathonAdminEditor();
+                } else {
+                    lockIcon.innerHTML = "⛔";
+                    statusMessage.style.color = "#dc2626";
+                    statusMessage.innerText = "Доступ заблокирован! У вашего аккаунта нет прав администратора.";
+                    setTimeout(() => { window.location.href = "index.html"; }, 4000);
+                }
+            } catch (error) {
+                console.error("Ошибка авторизации:", error);
+                statusMessage.innerText = "❌ Ошибка при чтении прав из Firestore.";
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            const statusMessage = document.getElementById('auth-status-message');
+            const loginForm = document.getElementById('admin-login-form');
+            const lockIcon = document.getElementById('lock-icon-status');
+            
+            if (!user) {
+                lockIcon.innerHTML = "🔒";
+                statusMessage.innerText = "Требуется авторизация администратора";
+                loginForm.style.display = "flex";
+            } else {
+                await checkAdminRole(user);
+            }
+        });
+
+        window.loginAsAdmin = async function() {
+            const email = document.getElementById('admin-email').value.trim();
+            const password = document.getElementById('admin-password').value;
+            const btn = document.getElementById('btn-login-submit');
+
+            if (!email || !password) return alert("Введите Email и Пароль!");
+
+            try {
+                btn.disabled = true;
+                btn.innerText = "Вход...";
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                console.error(error);
+                alert("❌ Неверный логин или пароль.");
+                btn.disabled = false;
+                btn.innerText = "Войти в панель";
+            }
+        };
+
+        function showWorkspace() {
+            document.getElementById('auth-lock-screen').style.display = 'none';
+            document.getElementById('admin-workspace').style.display = 'block';
+            document.getElementById('manage-users-card').style.display = 'block';
+            document.getElementById('manage-videos-card').style.display = 'block';
+            document.getElementById('manage-cats-card').style.display = 'block';
+        }
+
+        // --- УПРАВЛЕНИЕ КАЛЕНДАРЕМ МАРАФОНА (15:00 МСК по умолчанию) ---
+        async function loadMarathonAdminEditor() {
+            const container = document.getElementById('admin-marathon-editor-container');
+            if (!container) return;
+
+            try {
+                const docRef = doc(db, "settings", "marathon");
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists() && docSnap.data().days) {
+                    currentMarathonDays = docSnap.data().days;
+                } else {
+                    currentMarathonDays = [
+                        { day: 1, dateStr: "10 ноя", title: "Премьера #1", releaseTime: "2026-11-10T15:00:00+03:00", videoUrl: "" },
+                        { day: 2, dateStr: "11 ноя", title: "Видео #2", releaseTime: "2026-11-11T15:00:00+03:00", videoUrl: "" },
+                        { day: 3, dateStr: "12 ноя", title: "Видео #3", releaseTime: "2026-11-12T15:00:00+03:00", videoUrl: "" },
+                        { day: 4, dateStr: "13 ноя", title: "Видео #4", releaseTime: "2026-11-13T15:00:00+03:00", videoUrl: "" },
+                        { day: 5, dateStr: "14 ноя", title: "Видео #5", releaseTime: "2026-11-14T15:00:00+03:00", videoUrl: "" },
+                        { day: 6, dateStr: "15 ноя", title: "Видео #6", releaseTime: "2026-11-15T15:00:00+03:00", videoUrl: "" },
+                        { day: 7, dateStr: "16 ноя", title: "Финал марафона", releaseTime: "2026-11-16T15:00:00+03:00", videoUrl: "" }
+                    ];
+                }
+
+                renderMarathonEditorForm();
+            } catch (err) {
+                console.error("Ошибка загрузки настроек марафона:", err);
+            }
+        }
+
+        function renderMarathonEditorForm() {
+            const container = document.getElementById('admin-marathon-editor-container');
+            container.innerHTML = "";
+
+            currentMarathonDays.forEach((item, index) => {
+                const hasUrl = item.videoUrl && item.videoUrl.trim() !== "";
+                const card = document.createElement('div');
+                card.style.cssText = "background: rgba(0,0,0,0.25); border: 1px solid var(--card-border); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;";
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:13px; color:var(--accent-color);">
+                        <span>День ${item.day} ${hasUrl ? '🔗 (Ссылка добавлена)' : '⏳ (Ссылка пуста)'}</span>
+                        <input type="text" id="m-date-${index}" value="${item.dateStr || ''}" placeholder="10 ноя" style="width: 80px; padding: 4px 8px; background: rgba(0,0,0,0.3); border:1px solid var(--card-border); border-radius:6px; color:#fff; font-size:12px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="admin-label" style="font-size:11px;">Название видео:</label>
+                        <input type="text" id="m-title-${index}" value="${item.title || ''}" class="admin-input" style="padding: 8px 12px; font-size:12px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="admin-label" style="font-size:11px;">Дата и время релиза (15:00 МСК):</label>
+                        <input type="text" id="m-time-${index}" value="${item.releaseTime || ''}" class="admin-input" style="padding: 8px 12px; font-size:12px;" placeholder="2026-11-10T15:00:00+03:00">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="admin-label" style="font-size:11px;">Прямая ссылка на .mp4 / поток:</label>
+                        <input type="text" id="m-url-${index}" value="${item.videoUrl || ''}" class="admin-input" style="padding: 8px 12px; font-size:12px;" placeholder="https://files.catbox.moe/xxxx.mp4">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('save-marathon-btn').onclick = async function() {
+            try {
+                this.disabled = true;
+                this.innerText = "Сохранение...";
+
+                const updatedDays = currentMarathonDays.map((item, index) => {
+                    return {
+                        day: item.day,
+                        dateStr: document.getElementById(`m-date-${index}`).value.trim(),
+                        title: document.getElementById(`m-title-${index}`).value.trim(),
+                        releaseTime: document.getElementById(`m-time-${index}`).value.trim(),
+                        videoUrl: document.getElementById(`m-url-${index}`).value.trim()
+                    };
+                });
+
+                await setDoc(doc(db, "settings", "marathon"), {
+                    days: updatedDays,
+                    updatedAt: new Date().toISOString()
+                });
+
+                alert("🎉 Календарь марафона успешно обновлен на сайте!");
+                currentMarathonDays = updatedDays;
+                renderMarathonEditorForm();
+            } catch (err) {
+                console.error(err);
+                alert("❌ Ошибка при сохранении марафона.");
+            } finally {
+                this.disabled = false;
+                this.innerText = "💾 Сохранить изменения марафона";
+            }
+        };
+
+        function initMaintenanceListener() {
+            const statusText = document.getElementById('maintenance-status-text');
+            onSnapshot(doc(db, "settings", "maintenance"), (docSnap) => {
+                const isMaintenance = docSnap.exists() ? docSnap.data().active : false;
+                if (statusText) {
+                    statusText.innerText = isMaintenance ? "ВКЛЮЧЕНЫ 🔴 (Сайт заблокирован)" : "ВЫКЛЮЧЕНЫ 🟢 (Сайт открыт)";
+                    statusText.style.color = isMaintenance ? "#dc2626" : "#16a34a";
+                }
+            });
+
+            document.getElementById('maint-on-btn').onclick = () => setMaintenanceMode(true);
+            document.getElementById('maint-off-btn').onclick = () => setMaintenanceMode(false);
+        }
+
+        async function setMaintenanceMode(status) {
+            try {
+                await setDoc(doc(db, "settings", "maintenance"), {
+                    active: status,
+                    updatedAt: new Date().toISOString()
+                });
+                alert(status ? "🔴 Режим тех. работ ВКЛЮЧЕН!" : "🟢 Режим тех. работ ВЫКЛЮЧЕН!");
+            } catch (error) {
+                alert("❌ Не удалось изменить режим тех. работ.");
+            }
+        }
+
+        async function loadAdminData() {
+            const selectElement = document.getElementById('video-category');
+            const videosList = document.getElementById('admin-videos-list');
+            const catsList = document.getElementById('admin-cats-list');
+            const usersList = document.getElementById('admin-users-list');
+            
+            selectElement.innerHTML = '<option value="all">Общая категория</option>';
+            videosList.innerHTML = '';
+            catsList.innerHTML = '';
+            usersList.innerHTML = '';
+            
+            loadedVideos = {};
+            loadedCats = {};
+            loadedUsers = {};
+            
+            try {
+                const userSnapshot = await getDocs(collection(db, "users"));
+                userSnapshot.forEach((docSnap) => {
+                    const userData = docSnap.data();
+                    const userId = docSnap.id;
+                    loadedUsers[userId] = userData;
+
+                    const nickname = userData.nickname || 'Без имени';
+                    const avatar = userData.avatar || 'https://via.placeholder.com/40';
+                    const role = userData.role || 'user';
+                    const isAdmin = role === 'admin';
+
+                    usersList.innerHTML += `
+                        <div class="item-card">
+                            <div class="item-info" style="flex-direction: row; align-items: center; gap: 12px;">
+                                <img src="${avatar}" alt="${nickname}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--card-border);">
+                                <div style="display: flex; flex-direction: column;">
+                                    <span class="item-title">${nickname}</span>
+                                    <span class="item-meta">Роль: ${role} | ID: ${userId.slice(0, 8)}...</span>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn-control ${isAdmin ? 'btn-role-user' : 'btn-role-admin'}" id="btn-toggle-role-${userId}">
+                                    ${isAdmin ? 'Забрать админку' : 'Сделать админом'}
+                                </button>
+                            </div>
+                        </div>`;
+                });
+
+                userSnapshot.forEach((docSnap) => {
+                    const userId = docSnap.id;
+                    const userData = docSnap.data();
+                    const currentRole = userData.role || 'user';
+                    document.getElementById(`btn-toggle-role-${userId}`).onclick = () => window.toggleUserRole(userId, currentRole);
+                });
+
+                const catSnapshot = await getDocs(collection(db, "playlists"));
+                catSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    loadedCats[doc.id] = data;
+                    
+                    const option = document.createElement('option');
+                    option.value = data.id;
+                    option.innerText = data.name;
+                    selectElement.appendChild(option);
+
+                    catsList.innerHTML += `
+                        <div class="item-card">
+                            <div class="item-info">
+                                <span class="item-title">${data.name}</span>
+                                <span class="item-meta">ID (En): ${data.id}</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn-control btn-edit" id="btn-edit-cat-${doc.id}">✎</button>
+                                <button class="btn-control btn-del" id="btn-del-cat-${doc.id}">🗑</button>
+                            </div>
+                        </div>`;
+                });
+
+                catSnapshot.forEach((doc) => {
+                    document.getElementById(`btn-edit-cat-${doc.id}`).onclick = () => window.startEditCategory(doc.id);
+                    document.getElementById(`btn-del-cat-${doc.id}`).onclick = () => window.deleteAdminItem('playlists', doc.id);
+                });
+
+                const videoSnapshot = await getDocs(collection(db, "videos"));
+                videoSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    loadedVideos[doc.id] = data;
+
+                    const orderText = data.order !== undefined ? ` | Порядок: ${data.order}` : '';
+
+                    videosList.innerHTML += `
+                        <div class="item-card">
+                            <div class="item-info">
+                                <span class="item-title">${data.title}</span>
+                                <span class="item-meta">ID: ${doc.id}${orderText} | Тип: ${data.type || 'video'} | Категория: ${data.category}</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn-control btn-edit" id="btn-edit-vid-${doc.id}">✎</button>
+                                <button class="btn-control btn-del" id="btn-del-vid-${doc.id}">🗑</button>
+                            </div>
+                        </div>`;
+                });
+
+                videoSnapshot.forEach((doc) => {
+                    document.getElementById(`btn-edit-vid-${doc.id}`).onclick = () => window.startEditVideo(doc.id);
+                    document.getElementById(`btn-del-vid-${doc.id}`).onclick = () => window.deleteAdminItem('videos', doc.id);
+                });
+
+            } catch (error) {
+                console.error("Ошибка загрузки данных:", error);
+            }
+        }
+
+        window.toggleUserRole = async function(userId, currentRole) {
+            const newRole = currentRole === 'admin' ? 'user' : 'admin';
+            if (!confirm(`Изменить роль пользователя?`)) return;
+
+            try {
+                await updateDoc(doc(db, "users", userId), { role: newRole });
+                alert("✨ Роль обновлена!");
+                await loadAdminData();
+            } catch (error) {
+                alert("❌ Не удалось изменить роль.");
+            }
+        };
+
+        document.getElementById('save-remind-btn').onclick = async function() {
+            const title = document.getElementById('remind-title').value.trim();
+            const text = document.getElementById('remind-text').value.trim();
+            const durationHours = parseInt(document.getElementById('remind-duration').value);
+
+            if (!title || !text) return alert("⚠️ Заполните заголовок и текст напоминалки!");
+
+            try {
+                this.disabled = true;
+                const now = new Date();
+                const expiresAt = new Date(now.getTime() + durationHours * 60 * 60 * 1000);
+
+                await setDoc(doc(db, "settings", "current_reminder"), {
+                    title, text, createdAt: now.toISOString(), expiresAt: expiresAt.toISOString()
+                });
+
+                alert("🎉 Напоминалка успешно заведена!");
+                document.getElementById('remind-title').value = "";
+                document.getElementById('remind-text').value = "";
+            } catch (error) {
+                alert("❌ Ошибка при запуске напоминалки.");
+            } finally {
+                this.disabled = false;
+            }
+        };
+
+        document.getElementById('delete-remind-btn').onclick = async function() {
+            if (!confirm("Снять напоминалку с сайта?")) return;
+            try {
+                await deleteDoc(doc(db, "settings", "current_reminder"));
+                alert("🗑 Напоминалка снята!");
+            } catch (error) {
+                alert("❌ Ошибка.");
+            }
+        };
+
+        window.startEditVideo = function(docId) {
+            const video = loadedVideos[docId];
+            if (!video) return;
+            editingVideoId = docId;
+            
+            document.getElementById('video-custom-id').value = docId;
+            document.getElementById('video-order').value = video.order !== undefined ? video.order : "";
+            document.getElementById('video-title').value = video.title || "";
+            document.getElementById('video-url').value = video.url || "";
+            document.getElementById('video-category').value = video.category || "all";
+            document.getElementById('video-type').value = video.type || "video";
+            document.getElementById('video-desc').value = video.desc !== "Описание отсутствует..." ? (video.desc || "") : "";
+            document.getElementById('video-src').value = video.src || "Инсаф Студио";
+
+            document.getElementById('video-form-title').innerText = "📝 Редактирование видео";
+            document.getElementById('publish-btn').innerText = "💾 Сохранить изменения";
+            document.getElementById('cancel-video-edit-btn').style.display = "inline-flex";
+            document.getElementById('admin-workspace').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        function resetVideoForm() {
+            editingVideoId = null;
+            document.getElementById('video-custom-id').value = "";
+            document.getElementById('video-order').value = "";
+            document.getElementById('video-title').value = "";
+            document.getElementById('video-url').value = "";
+            document.getElementById('video-category').value = "all";
+            document.getElementById('video-type').value = "video";
+            document.getElementById('video-desc').value = "";
+            document.getElementById('video-src').value = "Инсаф Студио";
+
+            document.getElementById('video-form-title').innerText = "🎬 Добавить новое видео";
+            document.getElementById('publish-btn').innerText = "🚀 Опубликовать на сайт";
+            document.getElementById('cancel-video-edit-btn').style.display = "none";
+        }
+        document.getElementById('cancel-video-edit-btn').onclick = resetVideoForm;
+
+        window.startEditCategory = function(docId) {
+            const cat = loadedCats[docId];
+            if (!cat) return;
+            editingCatId = docId;
+
+            document.getElementById('new-cat-name').value = cat.name || "";
+            document.getElementById('new-cat-id').value = cat.id || "";
+
+            document.getElementById('cat-form-title').innerText = "📝 Изменить категорию";
+            document.getElementById('create-cat-btn').innerText = "💾 Сохранить изменения категории";
+            document.getElementById('cancel-cat-edit-btn').style.display = "inline-flex";
+        };
+
+        function resetCatForm() {
+            editingCatId = null;
+            document.getElementById('new-cat-name').value = "";
+            document.getElementById('new-cat-id').value = "";
+            document.getElementById('cat-form-title').innerText = "📁 Создать новую категорию";
+            document.getElementById('create-cat-btn').innerText = "➕ Создать новую категорию";
+            document.getElementById('cancel-cat-edit-btn').style.display = "none";
+        }
+        document.getElementById('cancel-cat-edit-btn').onclick = resetCatForm;
+
+        window.deleteAdminItem = async function(colName, docId) {
+            if (confirm("Удалить элемент?")) {
+                try {
+                    await deleteDoc(doc(db, colName, docId));
+                    alert("🗑 Удалено!");
+                    if (editingVideoId === docId) resetVideoForm();
+                    if (editingCatId === docId) resetCatForm();
+                    loadAdminData();
+                } catch (e) {
+                    alert("❌ Ошибка");
+                }
+            }
+        };
+
+        document.getElementById('publish-btn').onclick = async function() {
+            const customId = document.getElementById('video-custom-id').value.trim();
+            const orderVal = document.getElementById('video-order').value.trim();
+            const title = document.getElementById('video-title').value.trim();
+            const url = document.getElementById('video-url').value.trim();
+            const category = document.getElementById('video-category').value;
+            const type = document.getElementById('video-type').value;
+            const desc = document.getElementById('video-desc').value.trim();
+            const src = document.getElementById('video-src').value.trim();
+
+            if (!title || !url) return alert("Заполни название и ссылку!");
+
+            const videoData = {
+                title, url, category, type,
+                desc: desc || "Описание отсутствует...",
+                src: src || "Инсаф Студио",
+                timestamp: Date.now()
+            };
+
+            if (orderVal !== "") videoData.order = Number(orderVal);
+
+            try {
+                this.disabled = true;
+                if (editingVideoId) {
+                    if (customId && customId !== editingVideoId) {
+                        const newRef = doc(db, "videos", customId);
+                        const checkNew = await getDoc(newRef);
+                        if (checkNew.exists()) {
+                            alert("ID уже занят!");
+                            this.disabled = false;
+                            return;
+                        }
+                        await setDoc(newRef, videoData);
+                        await deleteDoc(doc(db, "videos", editingVideoId));
+                    } else {
+                        await updateDoc(doc(db, "videos", editingVideoId), videoData);
+                    }
+                    resetVideoForm();
+                } else {
+                    if (customId) {
+                        const targetRef = doc(db, "videos", customId);
+                        const checkExists = await getDoc(targetRef);
+                        if (checkExists.exists()) {
+                            alert("ID уже занят!");
+                            this.disabled = false;
+                            return;
+                        }
+                        await setDoc(targetRef, videoData);
+                    } else {
+                        await addDoc(collection(db, "videos"), videoData);
+                    }
+                    resetVideoForm();
+                }
+                alert("Успешно сохранено!");
+                await loadAdminData();
+            } catch (error) {
+                alert("Ошибка сохранения.");
+            } finally {
+                this.disabled = false;
+            }
+        };
+
+        document.getElementById('create-cat-btn').onclick = async function() {
+            const catName = document.getElementById('new-cat-name').value.trim();
+            const catId = document.getElementById('new-cat-id').value.trim().toLowerCase();
+
+            if (!catName || !catId) return alert("Заполни имя и ID категории!");
+
+            try {
+                this.disabled = true;
+                if (editingCatId) {
+                    await updateDoc(doc(db, "playlists", editingCatId), { name: catName, id: catId });
+                    resetCatForm();
+                } else {
+                    await addDoc(collection(db, "playlists"), { name: catName, id: catId });
+                    resetCatForm();
+                }
+                alert("Категория сохранена!");
+                await loadAdminData();
+            } catch (error) {
+                alert("Ошибка.");
+            } finally {
+                this.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игры — Инсаф Студио (v1.6.0: Марафон Edition)</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/BKTj140N/image.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/BKTj140N/image.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #08080c;
+            --text-color: #f3f4f6;
+            --header-bg: rgba(15, 15, 23, 0.75);
+            --card-bg: rgba(22, 22, 33, 0.7);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-text-muted: #9ca3af;
+            --main-player-bg: #0d0d14;
+            --like-btn-bg: rgba(255, 255, 255, 0.05);
+            --footer-bg: #050508;
+            --footer-text: #4b5563;
+            --playlist-btn-bg: rgba(255, 255, 255, 0.04);
+            --modal-bg: #11111a;
+            
+            --accent-color: #ff0055;
+            --glow-effect: 0 0 20px rgba(255, 0, 85, 0.35);
+            --glass-blur: blur(12px);
+            
+            --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --border-radius-base: 16px;
+            --border-radius-round: 30px;
+        }
+
+        /* --- КЛАССИЧЕСКАЯ ТЕМА --- */
+        body.classic-theme {
+            --bg-color: #0f0f0f;
+            --text-color: #ffffff;
+            --header-bg: #1a1a1a;
+            --card-bg: #1c1c1c;
+            --card-border: #2b2b2b;
+            --card-text-muted: #aaaaaa;
+            --modal-bg: #242424;
+            --border-radius-base: 12px;
+            --border-radius-round: 25px;
+            background-image: none !important;
+        }
+        body.classic-theme header {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid var(--card-border);
+        }
+        body.classic-theme .game-card {
+            backdrop-filter: none !important;
+            border: 2px solid var(--card-border);
+        }
+        body.classic-theme footer {
+            background: linear-gradient(135deg, #16161a, #0b0b0d) !important;
+            border-top: 3px solid var(--accent-color) !important;
+        }
+
+        /* --- СВЕТЛАЯ ТЕМА --- */
+        body.light-theme {
+            --bg-color: #f4f6fa;
+            --text-color: #111827;
+            --header-bg: rgba(255, 255, 255, 0.8);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --card-text-muted: #4b5563;
+            --main-player-bg: #e5e7eb;
+            --like-btn-bg: rgba(0, 0, 0, 0.05);
+            --footer-bg: #ffffff;
+            --footer-text: #9ca3af;
+            --playlist-btn-bg: rgba(0, 0, 0, 0.03);
+            --modal-bg: #ffffff;
+        }
+        
+        body.light-theme .settings-label,
+        body.light-theme .modal-header h3,
+        body.light-theme .settings-value {
+            color: #111827 !important;
+        }
+        body.light-theme .settings-item-row {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        /* --- МАЙНКРАФТ ТЕМА --- */
+        body.minecraft-theme {
+            --bg-color: #4a3b2c;
+            --text-color: #ffff55;
+            --header-bg: #31261b;
+            --card-bg: #2a1e12;
+            --card-border: #140e08;
+            --card-text-muted: #aaaaaa;
+            --main-player-bg: #1d140b;
+            --like-btn-bg: #5c4a36;
+            --footer-bg: #211810;
+            --footer-text: #aaaaaa;
+            --playlist-btn-bg: #5c4a36;
+            --modal-bg: #3a2f23;
+            --site-font: 'Press Start 2P', monospace;
+            --border-radius-base: 0px;
+            --border-radius-round: 0px;
+        }
+
+        body.minecraft-theme * {
+            font-family: var(--site-font) !important;
+            letter-spacing: -0.5px;
+        }
+        body.minecraft-theme h2.section-title { font-size: 10px !important; text-shadow: 2px 2px #000; }
+        body.minecraft-theme h3 { font-size: 9px !important; text-shadow: 2px 2px #000; }
+        body.minecraft-theme .nav-link, 
+        body.minecraft-theme .settings-label, 
+        body.minecraft-theme .settings-value,
+        body.minecraft-theme .action-btn,
+        body.minecraft-theme .reset-btn,
+        body.minecraft-theme .theme-cycle-btn,
+        body.minecraft-theme .version-tag-style,
+        body.minecraft-theme .admin-btn { font-size: 7px !important; padding: 5px 8px !important; }
+        body.minecraft-theme .card-title { font-size: 8px !important; line-height: 1.4; }
+        body.minecraft-theme .card-text { font-size: 7px !important; }
+        body.minecraft-theme .logo span { font-size: 8px !important; }
+        body.minecraft-theme .settings-modal { padding: 12px; max-width: 320px; }
+        body.minecraft-theme .settings-item-row { margin-bottom: 10px; }
+        body.minecraft-theme footer { padding: 30px 15px !important; }
+        body.minecraft-theme .footer-main-container { flex-direction: column !important; gap: 20px !important; }
+        body.minecraft-theme .footer-brand h3 { font-size: 14px !important; }
+        body.minecraft-theme .footer-brand p { font-size: 7px !important; }
+        body.minecraft-theme .footer-nav h4, body.minecraft-theme .footer-social h4 { font-size: 8px !important; }
+        body.minecraft-theme .footer-nav-links a { font-size: 7px !important; }
+        body.minecraft-theme .social-circle-btn { width: 30px !important; height: 30px !important; font-size: 7px !important; border-radius: 0px !important; }
+        body.minecraft-theme .footer-copyright { font-size: 7px !important; margin-top: 15px !important; padding-top: 10px !important; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; min-height: 100vh; background-image: radial-gradient(circle at 80% 20%, rgba(255, 0, 85, 0.05) 0%, transparent 40%), radial-gradient(circle at 10% 70%, rgba(122, 0, 255, 0.05) 0%, transparent 45%); background-attachment: fixed; }
+
+        header { background-color: var(--header-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--card-border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); gap: 15px; }
+        .header-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .logo { display: flex; align-items: center; text-decoration: none; height: 38px; transform: translateZ(0); transition: transform 0.2s; }
+        .logo:hover { transform: scale(1.03); }
+        .logo img { height: 100%; width: auto; border-radius: 10px; box-shadow: var(--glow-effect); }
+        .logo span { color: #fff; font-size: 13px; font-weight: 700; background: linear-gradient(135deg, var(--accent-color), #9d00ff); padding: 4px 10px; border-radius: 8px; margin-left: 8px; box-shadow: var(--glow-effect); letter-spacing: 0.5px; }
+
+        .main-nav { display: flex; gap: 6px; background: rgba(0,0,0,0.2); padding: 4px; border-radius: var(--border-radius-base); border: 1px solid var(--card-border); flex-wrap: wrap; }
+        .nav-link { color: var(--card-text-muted); text-decoration: none; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 10px; cursor: pointer; background: none; border: none; outline: none; white-space: nowrap; transition: all 0.25s ease; }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,0.03); }
+        .nav-link.active { color: #fff; background: linear-gradient(135deg, var(--accent-color), rgba(255,0,85,0.6)); box-shadow: var(--glow-effect); }
+        .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        
+        .header-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--card-border); cursor: pointer; background-color: var(--like-btn-bg); transition: all 0.25s; }
+        .header-avatar:hover { border-color: var(--accent-color); box-shadow: var(--glow-effect); transform: translateY(-2px); }
+
+        .settings-toggle { background: var(--like-btn-bg); border: 1px solid var(--card-border); color: var(--text-color); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+        .settings-toggle:hover { border-color: var(--accent-color); box-shadow: var(--glow-effect); transform: rotate(45deg); background: rgba(255,255,255,0.05); }
+
+        /* Индикатор Онлайн */
+        .online-counter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #4ade80;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 4, 6, 0.8); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 15px; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .settings-modal { background: var(--modal-bg); border: 1px solid var(--card-border); border-radius: 20px; width: 100%; max-width: 400px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); display: flex; flex-direction: column; max-height: 90vh; overflow-y: auto; transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modal-overlay.active .settings-modal { transform: scale(1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .modal-header h3 { font-size: 18px; font-weight: 700; color: #fff; }
+        .modal-close { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-color); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .modal-close:hover { background: rgba(255,0,85,0.2); border-color: var(--accent-color); }
+        
+        .settings-item-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; width: 100%; background: rgba(255,255,255,0.02); padding: 10px 14px; border-radius: var(--border-radius-base); border: 1px solid var(--card-border); gap: 10px; }
+        .settings-label { font-size: 13px; font-weight: 600; color: #fff; }
+        .settings-value { font-size: 13px; color: var(--card-text-muted); text-align: right; }
+
+        .version-tag-style { background: linear-gradient(135deg, rgba(255,0,85,0.1), rgba(157,0,255,0.1)); border: 1px solid var(--accent-color); padding: 4px 10px; border-radius: 8px; color: var(--accent-color); font-weight: 700; font-size: 12px; box-shadow: var(--glow-effect); white-space: nowrap; }
+
+        .theme-cycle-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: #fff; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
+        .theme-cycle-btn:hover { border-color: var(--accent-color); box-shadow: var(--glow-effect); background: rgba(255,255,255,0.08); }
+
+        .color-picker-wrapper { display: flex; align-items: center; gap: 10px; }
+        .color-input { -webkit-appearance: none; appearance: none; width: 35px; height: 26px; background: transparent; border: none; cursor: pointer; }
+        .color-input::-webkit-color-swatch { border-radius: 6px; border: 1px solid var(--card-border); }
+
+        .admin-nav-link-btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 10px; background: linear-gradient(135deg, #ff9900, #d48000); color: #fff; font-weight: 700; text-decoration: none; border-radius: 12px; font-size: 13px; text-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: all 0.25s; box-shadow: 0 4px 15px rgba(255, 153, 0, 0.2); }
+        .admin-nav-link-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255, 153, 0, 0.4); }
+
+        .container { max-width: 1240px; margin: 30px auto; padding: 0 20px; }
+        .section-title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; border-left: 4px solid var(--accent-color); padding-left: 12px; margin-bottom: 25px; background: linear-gradient(180deg, #fff 0%, #9ca3af 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        body.light-theme .section-title { background: none; -webkit-background-clip: initial; -webkit-text-fill-color: initial; color: #111827; }
+
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .game-card { background-color: var(--card-bg); backdrop-filter: var(--glass-blur); border-radius: var(--border-radius-base); overflow: hidden; cursor: pointer; border: 1px solid var(--card-border); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+        .game-card:hover { transform: translateY(-4px); border-color: var(--accent-color); box-shadow: 0 0 25px rgba(255,0,85,0.25); }
+
+        .game-thumb-block { width: 100%; height: 160px; background: linear-gradient(45deg, #00f0ff, #7a00ff); position: relative; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+        .game-thumb-block::after { content: "🎮"; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+
+        .card-info { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .card-title { font-size: 18px; font-weight: 700; color: #fff; }
+        body.light-theme .card-title { color: #111827; }
+        .card-desc { font-size: 13px; color: var(--card-text-muted); line-height: 1.4; flex: 1; }
+        .card-badge { font-size: 11px; font-weight: 700; color: #00ff80; background: rgba(0,255,128,0.1); padding: 4px 10px; border-radius: 6px; align-self: flex-start; border: 1px solid rgba(0,255,128,0.3); text-transform: uppercase; }
+
+        .game-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: none; flex-direction: column; }
+        .game-modal-overlay.active { display: flex; }
+        .game-header-bar { background: #0f1423; padding: 12px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent-color); }
+        .close-game-btn { background: var(--accent-color); color: #fff; border: none; padding: 8px 18px; border-radius: var(--border-radius-round); font-weight: 700; cursor: pointer; box-shadow: var(--glow-effect); transition: transform 0.2s; }
+        .close-game-btn:hover { transform: scale(1.05); }
+
+        footer { background: #040406; color: #ffffff; padding: 40px 20px; border-top: 1px solid var(--card-border); }
+        body.light-theme footer { background: #fff; border-top: 1px solid rgba(0,0,0,0.08); }
+        .footer-main-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
+        .footer-brand { flex: 1.5; min-width: 220px; }
+        .footer-brand h3 { color: #fff; font-size: 18px; margin-bottom: 10px; font-weight: 800; }
+        body.light-theme .footer-brand h3 { color: #111827; }
+        .footer-brand p { color: #6b7280; line-height: 1.5; font-size: 13px; }
+        .footer-nav { flex: 1; min-width: 140px; }
+        .footer-nav h4 { font-size: 12px; margin-bottom: 12px; text-transform: uppercase; color: #9ca3af; }
+        .footer-nav-links { list-style: none; line-height: 2.2; }
+        .footer-nav-links a { color: #6b7280; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .footer-social { flex: 1; min-width: 160px; }
+        .footer-social h4 { font-size: 12px; margin-bottom: 12px; text-transform: uppercase; color: #9ca3af; }
+        .footer-social-icons { display: flex; gap: 8px; margin-top: 8px; }
+        .social-circle-btn { background: rgba(255,255,255,0.03); color: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 12px; text-decoration: none; font-size: 13px; font-weight: 700; border: 1px solid var(--card-border); }
+        body.light-theme .social-circle-btn { color: #111827; background: rgba(0,0,0,0.02); }
+        .social-circle-btn:hover { background: var(--accent-color); color: #fff; }
+        .footer-copyright { max-width: 1200px; margin: 30px auto 0 auto; padding-top: 15px; border-top: 1px solid var(--card-border); text-align: center; font-size: 12px; color: #4b5563; }
+        /* Canvas для снега */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* Интерактивный питомец */
+        #site-pet {
+            position: fixed;
+            bottom: 25px;
+            right: 90px;
+            width: 48px;
+            height: 48px;
+            z-index: 999;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            user-select: none;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+        }
+        #site-pet:hover { transform: scale(1.2) rotate(10deg); }
+        .pet-speech-bubble {
+            position: absolute;
+            bottom: 55px;
+            right: 0;
+            background: rgba(17, 17, 26, 0.95);
+            border: 1px solid var(--accent-color);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            pointer-events: none;
+            box-shadow: var(--glow-effect);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .pet-speech-bubble.active { opacity: 1; }
+
+        /* ==========================================================================
+           ИНДИКАТОР СЕТИ
+           ========================================================================== */
+        #network-status {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 68, 68, 0.9);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.4);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        #network-status.hidden { transform: translateY(100px); opacity: 0; pointer-events: none; }
+
+        /* ==========================================================================
+           ПРОГРЕСС-БАР СКРОЛЛА
+           ========================================================================== */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), #9d00ff);
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* ==========================================================================
+           КНОПКА НАВЕРХ (РАКЕТА)
+           ========================================================================== */
+        #rocket-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: var(--glass-blur);
+        }
+        #rocket-top-btn.visible { opacity: 1; visibility: visible; }
+        #rocket-top-btn:hover { transform: translateY(-5px); border-color: var(--accent-color); box-shadow: var(--glow-effect); }
+        #rocket-top-btn.launching { transform: translateY(-100vh) scale(0.8); opacity: 0; transition: transform 0.6s ease-in; }
+    </style>
+</head>
+<body>
+    <div id="scroll-progress"></div>
+    <div id="rocket-top-btn" onclick="window.scrollToTop()">🚀</div>
+    <div id="network-status">❌ Нет сети</div>
+    <canvas id="snow-canvas"></canvas>
+
+    <div id="site-pet" onclick="window.pokePet()" title="Твой компаньон">
+        🦊
+        <div class="pet-speech-bubble" id="pet-speech">Привет! Рад видеть тебя на Insaf Studio! 🦊</div>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo">
+                <img src="https://i.ibb.co/BKTj140N/image.png" alt="Инсаф Студио">
+                <span>Marathon Edition</span>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="index.html" class="nav-link">Сериалы и Фильмы</a>
+                <a href="games.html" class="nav-link active">Игры</a>
+            </nav>
+        </div>
+        <div class="nav-right">
+            <div class="online-counter-badge" title="Зрителей на сайте">
+                <span class="online-dot"></span> <span id="online-users-count">1</span> онлайн
+            </div>
+            <img src="https://via.placeholder.com/40" class="header-avatar" id="global-header-avatar" onclick="window.location.href='index.html'" title="Профиль">
+            <button class="settings-toggle" onclick="window.toggleSettingsModal(true)">⚙️</button>
+        </div>
+    </header>
+
+    <div class="modal-overlay" id="settings-overlay" onclick="window.toggleSettingsModal(false)">
+        <div class="settings-modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Настройки проекта</h3>
+                <button class="modal-close" onclick="window.toggleSettingsModal(false)">✕</button>
+            </div>
+            
+            <div class="settings-item-row">
+                <span class="settings-label">История обновлений:</span>
+                <span class="version-tag-style">v1.6.0: Марафон Edition 🚀</span>
+            </div>
+
+            <div class="settings-item-row">
+                <span class="settings-label">Смена темы:</span>
+                <button class="theme-cycle-btn" id="theme-cycle-button" onclick="window.cycleTheme()">🌙 Тёмная</button>
+            </div>
+
+            <div class="settings-item-row">
+                <span class="settings-label">Цвет оформления:</span>
+                <div class="color-picker-wrapper">
+                    <input type="color" id="accent-color-picker" class="color-input" value="#ff0055" oninput="window.changeAccentColor(this.value)">
+                </div>
+            </div>
+
+            <div class="settings-item-row">
+                <span class="settings-label">Автор проекта:</span>
+                <span class="settings-value">Инсаф</span>
+            </div>
+
+            <div class="settings-item-row">
+                <span class="settings-label">Эффект снега:</span>
+                <button class="theme-cycle-btn" id="snow-toggle-btn" onclick="window.toggleSnowEffect()">❄️ Вкл</button>
+            </div>
+
+            <div class="settings-item-row">
+                <span class="settings-label">Звуки интерфейса (UI):</span>
+                <button class="theme-cycle-btn" id="sfx-toggle-btn" onclick="window.toggleSfx()">🔊 Вкл</button>
+            </div>
+
+            <div class="settings-item-row">
+                <span class="settings-label">Питомец на экране:</span>
+                <button class="theme-cycle-btn" id="pet-toggle-btn" onclick="window.toggleSitePet()">🦊 Выкл</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Игровой зал Инсаф Студио</h2>
+        
+        <div class="games-grid">
+            <div class="game-card" onclick="window.launchGame('gd.html')">
+                <div class="game-thumb-block"></div>
+                <div class="card-info">
+                    <div class="card-title">Geometry Dash</div>
+                    <div class="card-desc">Культовый ритм-платформер прямо в браузере. Прыгай, уворачивайся и ставь рекорды!</div>
+                    <span class="card-badge">Доступно</span>
+                </div>
+            </div>
+
+            <div class="game-card" onclick="window.launchGame('gtasan.html')">
+                <div class="game-thumb-block" style="background: linear-gradient(45deg, #4a90d9, #1a3a5c);"></div>
+                <div class="card-info">
+                    <div class="card-title">GTA San Andreas</div>
+                    <div class="card-desc">Легендарная криминальная сага в открытом мире. Калифорния ждёт — исследуй Сан-Андреас!</div>
+                    <span class="card-badge">Доступно</span>
+                </div>
+            </div>
+
+            <div class="game-card" style="opacity: 0.6; cursor: default;">
+                <div class="game-thumb-block" style="background: linear-gradient(45deg, #ff0055, #333);"></div>
+                <div class="card-info">
+                    <div class="card-title">Скоро...</div>
+                    <div class="card-desc">Новые крутые мини-игры появятся здесь в будущих обновлениях. Следите за анонсами!</div>
+                    <span class="card-badge" style="color: #ff0055; background: rgba(255,0,85,0.1); border-color: rgba(255,0,85,0.3);">В разработке</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-modal-overlay" id="game-modal">
+        <div class="game-header-bar">
+            <span style="font-weight: 700; color: #fff;" id="game-title-text">Geometry Dash — Insaf Studio</span>
+            <button class="close-game-btn" onclick="window.closeGame()">✕ Выйти из игры</button>
+        </div>
+        <iframe id="game-frame" src="" style="width: 100%; flex: 1; border: none;"></iframe>
+    </div>
+
+    <footer>
+        <div class="footer-main-container">
+            <div class="footer-brand">
+                <h3>Инсаф Студио</h3>
+                <p>Твой любимый уголок с ламповыми летсплеями, фильмами и теперь уже играми!</p>
+            </div>
+            <div class="footer-nav">
+                <h4>Навигация</h4>
+                <ul class="footer-nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.html">Сериалы и Фильмы</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Сообщество</h4>
+                <div class="footer-social-icons">
+                    <a href="https://t.me/+7dzv_7FxPmA1YjBi" target="_blank" class="social-circle-btn">TG</a>
+                    <a href="https://www.tiktok.com/@woran4ik_off" target="_blank" class="social-circle-btn">TT</a>
+                    <a href="https://www.youtube.com/@Woran4ik" target="_blank" class="social-circle-btn">YT</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">&copy; 2026 Инсаф Студио. Все права защищены.</div>
+    </footer>
+
+    <script>
+        // --- ЗВУКОВЫЕ ЭФФЕКТЫ UI ---
+        let sfxEnabled = localStorage.getItem('sfxEnabled') !== 'false';
+        function playUiSound() {
+            if (!sfxEnabled) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(580, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.05);
+            } catch(e) {}
+        }
+        window.toggleSfx = function() {
+            sfxEnabled = !sfxEnabled;
+            localStorage.setItem('sfxEnabled', sfxEnabled);
+            document.getElementById('sfx-toggle-btn').innerText = sfxEnabled ? "🔊 Вкл" : "🔇 Выкл";
+            playUiSound();
+        };
+        document.getElementById('sfx-toggle-btn').innerText = sfxEnabled ? "🔊 Вкл" : "🔇 Выкл";
+
+        // Вешаем звуковой эффект на основные клики
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.game-card')) {
+                playUiSound();
+            }
+        });
+
+        // --- СНЕГ НА ФОНЕ ---
+        let snowEnabled = localStorage.getItem('snowEnabled') !== 'false';
+        const snowCanvas = document.getElementById('snow-canvas');
+        const snowCtx = snowCanvas.getContext('2d');
+        let snowflakes = [];
+
+        function initSnow() {
+            snowCanvas.width = window.innerWidth;
+            snowCanvas.height = window.innerHeight;
+            snowflakes = [];
+            for (let i = 0; i < 60; i++) {
+                snowflakes.push({
+                    x: Math.random() * snowCanvas.width,
+                    y: Math.random() * snowCanvas.height,
+                    radius: Math.random() * 2.5 + 1,
+                    speed: Math.random() * 1 + 0.5,
+                    wind: Math.random() * 0.5 - 0.25
+                });
+            }
+        }
+        function drawSnow() {
+            if (!snowEnabled) { snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height); return; }
+            snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+            snowCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            snowCtx.beginPath();
+            snowflakes.forEach(f => {
+                snowCtx.moveTo(f.x, f.y);
+                snowCtx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+                f.y += f.speed;
+                f.x += f.wind;
+                if (f.y > snowCanvas.height) { f.y = 0; f.x = Math.random() * snowCanvas.width; }
+            });
+            snowCtx.fill();
+            requestAnimationFrame(drawSnow);
+        }
+        window.toggleSnowEffect = function() {
+            snowEnabled = !snowEnabled;
+            localStorage.setItem('snowEnabled', snowEnabled);
+            document.getElementById('snow-toggle-btn').innerText = snowEnabled ? "❄️ Вкл" : "☀️ Выкл";
+            if (snowEnabled) drawSnow();
+            else snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+        };
+        document.getElementById('snow-toggle-btn').innerText = snowEnabled ? "❄️ Вкл" : "☀️ Выкл";
+        window.addEventListener('resize', initSnow);
+        initSnow();
+        drawSnow();
+
+        // --- ИНТЕРАКТИВНЫЙ ПИТОМЕЦ ---
+        let petEnabled = localStorage.getItem('petEnabled') === 'true';
+        const petEl = document.getElementById('site-pet');
+        const petSpeech = document.getElementById('pet-speech');
+        const petPhrases = [
+            "Привет! Рад видеть тебя на Insaf Studio! 🦊",
+            "Уютно тут, правда? ☕",
+            "Не забудь поставить лайк под видосом! ❤️",
+            "Марафон в самом разгаре, не пропусти реликвию! 🔥",
+            "Присаживайся поудобнее, устроим марафон! 🍿",
+            "*Фыр-фыр*... А пиксельный снег вкусный! ❄️",
+            "Я тут за главного, пока автора нет на линии 👑",
+            "Смотришь видео? А я смотрю на тебя 👀",
+            "Не забудь включить темную тему, береги глазки! 🌙",
+            "Кстати, загляни в наш Telegram-канал за анонсами! 💬",
+            "Пишешь код? Не забудь про коммит в репозиторий! 💻",
+            "Говорят, если кликнуть на меня еще раз, ничего не изменится... но мне приятно! ✨"
+        ];
+        function updatePetVisibility() {
+            petEl.style.display = petEnabled ? 'flex' : 'none';
+            document.getElementById('pet-toggle-btn').innerText = petEnabled ? "🦊 Вкл" : "🦊 Выкл";
+        }
+        window.toggleSitePet = function() {
+            petEnabled = !petEnabled;
+            localStorage.setItem('petEnabled', petEnabled);
+            updatePetVisibility();
+        };
+        window.pokePet = function() {
+            petSpeech.innerText = petPhrases[Math.floor(Math.random() * petPhrases.length)];
+            petSpeech.classList.add('active');
+            setTimeout(() => petSpeech.classList.remove('active'), 2500);
+        };
+        updatePetVisibility();
+
+        // --- ОНЛАЙН СЧЕТЧИК (СИМУЛЯЦИЯ) ---
+        function updateOnlineCounter() {
+            const count = Math.floor(Math.random() * 5) + 3; // от 3 до 7 человек
+            const el = document.getElementById('online-users-count');
+            if (el) el.innerText = count;
+        }
+        setInterval(updateOnlineCounter, 10000);
+        updateOnlineCounter();
+
+        // Прогресс-бар скролла
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+            document.getElementById('rocket-top-btn').classList.toggle('visible', window.scrollY > 300);
+        });
+
+        // Кнопка Наверх
+        window.scrollToTop = function() {
+            document.getElementById('rocket-top-btn').classList.add('launching');
+            setTimeout(() => { window.scrollTo({top: 0, behavior: 'smooth'}); document.getElementById('rocket-top-btn').classList.remove('launching'); }, 50);
+        };
+
+        // Индикатор сети
+        window.addEventListener('online', () => { document.getElementById('network-status').classList.add('hidden'); });
+        window.addEventListener('offline', () => { document.getElementById('network-status').classList.remove('hidden'); });
+
+        // Начальное состояние сети
+        if (navigator.onLine) {
+            document.getElementById('network-status').classList.add('hidden');
+        }
+
+        // Снег удален, используется Canvas
+        const themes = [
+            { name: 'dark', label: '🌙 Тёмная' },
+            { name: 'light', label: '☀️ Светлая' },
+            { name: 'minecraft', label: '⛏️ Майнкрафт' },
+            { name: 'classic', label: '📜 Классика' }
+        ];
+        let currentThemeIndex = 0;
+
+        function applyTheme(themeName) {
+            document.body.classList.remove('light-theme', 'dark-theme', 'minecraft-theme', 'classic-theme');
+            if (themeName !== 'dark') {
+                document.body.classList.add(themeName + '-theme');
+            }
+            currentThemeIndex = themes.findIndex(t => t.name === themeName);
+            if(currentThemeIndex === -1) currentThemeIndex = 0;
+            const themeBtn = document.getElementById('theme-cycle-button');
+            if (themeBtn) themeBtn.innerText = themes[currentThemeIndex].label;
+            localStorage.setItem('siteTheme', themeName);
+        }
+
+        window.cycleTheme = function() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            applyTheme(themes[currentThemeIndex].name);
+        };
+
+        window.changeAccentColor = function(colorHex) {
+            document.documentElement.style.setProperty('--accent-color', colorHex);
+            document.documentElement.style.setProperty('--glow-effect', '0 0 20px ' + colorHex + '59');
+            const picker = document.getElementById('accent-color-picker');
+            if(picker) picker.value = colorHex;
+            localStorage.setItem('accentColor', colorHex);
+        };
+
+        window.toggleSettingsModal = function(show) {
+            const overlay = document.getElementById('settings-overlay');
+            if (show) overlay.classList.add('active');
+            else overlay.classList.remove('active');
+        };
+
+        window.launchGame = function(url) {
+            const titles = {
+                'gd.html': 'Geometry Dash — Insaf Studio',
+                'gtasan.html': 'GTA San Andreas — Insaf Studio'
+            };
+            const titleText = titles[url] || 'Игра — Insaf Studio';
+            document.getElementById('game-title-text').innerText = titleText;
+            document.getElementById('game-frame').src = url;
+            document.getElementById('game-modal').classList.add('active');
+        };
+
+        window.closeGame = function() {
+            document.getElementById('game-modal').classList.remove('active');
+            document.getElementById('game-frame').src = '';
+        };
+
+        const savedTheme = localStorage.getItem('siteTheme') || 'dark';
+        applyTheme(savedTheme);
+
+        const savedAccent = localStorage.getItem('accentColor');
+        if (savedAccent) {
+            window.changeAccentColor(savedAccent);
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
+          authDomain: "insaf-backend.firebaseapp.com",
+          projectId: "insaf-backend",
+          storageBucket: "insaf-backend.firebasestorage.app",
+          messagingSenderId: "767081007202",
+          appId: "1:767081007202:web:f511d4fd8f20b9af87e93b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        onSnapshot(doc(db, "settings", "maintenance"), (docSnap) => {
+            const isMaintenance = docSnap.exists() ? docSnap.data().active : false;
+            if (isMaintenance) {
+                window.location.href = "maintenance.html";
+            }
+        });
+    </script>
+</body>
+</html>

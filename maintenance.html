@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инсаф Студио — Технические работы</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/BKTj140N/image.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/BKTj140N/image.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #08080c;
+            --text-color: #f3f4f6;
+            --header-bg: rgba(15, 15, 23, 0.75);
+            --card-bg: rgba(22, 22, 33, 0.7);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-text-muted: #9ca3af;
+            --accent-color: #ff0055;
+            --glow-effect: 0 0 25px rgba(255, 0, 85, 0.35);
+            --glass-blur: blur(12px);
+            --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --border-radius-base: 20px;
+            --border-radius-round: 30px;
+        }
+
+        /* --- КЛАССИЧЕСКАЯ ТЕМА --- */
+        body.classic-theme {
+            --bg-color: #0f0f0f;
+            --text-color: #ffffff;
+            --card-bg: #1c1c1c;
+            --card-border: #2b2b2b;
+            --card-text-muted: #aaaaaa;
+            --border-radius-base: 12px;
+            background-image: none !important;
+        }
+        body.classic-theme .maintenance-card {
+            backdrop-filter: none !important;
+            border: 2px solid var(--card-border);
+        }
+
+        /* --- СВЕТЛАЯ ТЕМА --- */
+        body.light-theme {
+            --bg-color: #f4f6fa;
+            --text-color: #111827;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --card-text-muted: #4b5563;
+        }
+
+        /* --- МАЙНКРАФТ ТЕМА --- */
+        body.minecraft-theme {
+            --bg-color: #4a3b2c;
+            --text-color: #ffff55;
+            --card-bg: #2a1e12;
+            --card-border: #140e08;
+            --card-text-muted: #aaaaaa;
+            --site-font: 'Press Start 2P', monospace;
+            --border-radius-base: 0px;
+            --border-radius-round: 0px;
+        }
+        body.minecraft-theme * { font-family: var(--site-font) !important; letter-spacing: -0.5px; }
+        body.minecraft-theme .maintenance-title { font-size: 18px !important; text-shadow: 3px 3px #000; }
+        body.minecraft-theme .maintenance-desc { font-size: 9px !important; line-height: 1.6; }
+        body.minecraft-theme .status-badge { font-size: 8px !important; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.05) 0%, transparent 60%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-color);
+            filter: blur(140px);
+            opacity: 0.15;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-glow-1 { top: 10%; left: 15%; }
+        .bg-glow-2 { bottom: 10%; right: 15%; }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 550px;
+            width: 90%;
+            margin: auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .maintenance-card {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--card-border);
+            border-radius: var(--border-radius-base);
+            padding: 40px 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-box {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            border-radius: 50%;
+            font-size: 38px;
+            color: var(--accent-color);
+            box-shadow: var(--glow-effect);
+            margin-bottom: 5px;
+        }
+
+        .icon-box i {
+            animation: gear-spin 8s linear infinite;
+        }
+
+        @keyframes gear-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            color: #ef4444;
+            padding: 6px 16px;
+            border-radius: var(--border-radius-round);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ef4444;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .maintenance-title {
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .maintenance-desc {
+            font-size: 14px;
+            color: var(--card-text-muted);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: var(--card-text-muted);
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="container">
+        <div class="maintenance-card">
+            
+            <div class="status-badge">
+                <span class="status-dot"></span> Технические работы
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-tools"></i>
+            </div>
+
+            <h1 class="maintenance-title">Технические работы</h1>
+
+            <p class="maintenance-desc">
+                Сайт временно недоступен — мы проводим технические работы и уже скоро вернёмся!
+                <br><br>
+                Спасибо за понимание. Подписывайтесь на наш Telegram-канал, чтобы не пропустить открытие.
+            </p>
+
+            <div class="status-badge" style="margin-top: 20px;">
+                <span class="status-dot"></span> Скоро вернёмся 🔧
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Инсаф Студио. Все права защищены.
+    </footer>
+
+    <script>
+        (function syncThemeAndAccent() {
+            const savedTheme = localStorage.getItem('siteTheme') || 'dark';
+            document.body.classList.remove('light-theme', 'dark-theme', 'minecraft-theme', 'classic-theme');
+            if (savedTheme !== 'dark') document.body.classList.add(savedTheme + '-theme');
+            
+            const savedColor = localStorage.getItem('accentColor') || '#ff0055';
+            document.documentElement.style.setProperty('--accent-color', savedColor);
+            document.documentElement.style.setProperty('--glow-effect', '0 0 25px ' + savedColor + '59');
+        })();
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
+          authDomain: "insaf-backend.firebaseapp.com",
+          projectId: "insaf-backend",
+          storageBucket: "insaf-backend.firebasestorage.app",
+          messagingSenderId: "767081007202",
+          appId: "1:767081007202:web:f511d4fd8f20b9af87e93b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        onSnapshot(doc(db, "settings", "maintenance"), (docSnap) => {
+            const isMaintenance = docSnap.exists() ? docSnap.data().active : false;
+            if (!isMaintenance) {
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+</body>
+</html>
