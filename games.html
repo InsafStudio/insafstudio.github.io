@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игры — Инсаф Студио (v1.6.0: Марафон Edition)</title>
+    <title>Игры — Инсаф Студио (v1.7.0)</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/BKTj140N/image.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/BKTj140N/image.png">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
             --glow-effect: 0 0 20px rgba(255, 0, 85, 0.35);
             --glass-blur: blur(12px);
             
-            --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --site-font: 'Arial Black', 'Segoe UI', sans-serif;
             --border-radius-base: 16px;
             --border-radius-round: 30px;
         }
@@ -373,7 +373,7 @@
         <div class="header-left">
             <a href="index.html" class="logo">
                 <img src="https://i.ibb.co/BKTj140N/image.png" alt="Инсаф Студио">
-                <span>Marathon Edition</span>
+                <span>v1.7.0</span>
             </a>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link">Главная</a>
@@ -399,7 +399,7 @@
             
             <div class="settings-item-row">
                 <span class="settings-label">История обновлений:</span>
-                <span class="version-tag-style">v1.6.0: Марафон Edition 🚀</span>
+                <span class="version-tag-style">v1.7.0 🚀</span>
             </div>
 
             <div class="settings-item-row">
@@ -449,11 +449,11 @@
                 </div>
             </div>
 
-            <div class="game-card" onclick="window.launchGame('gtasan.html')">
-                <div class="game-thumb-block" style="background: linear-gradient(45deg, #4a90d9, #1a3a5c);"></div>
+            <div class="game-card" onclick="window.launchGame('paperio2.html')">
+                <div class="game-thumb-block" style="background: linear-gradient(45deg, #3b82f6, #1d4ed8);"></div>
                 <div class="card-info">
-                    <div class="card-title">GTA San Andreas</div>
-                    <div class="card-desc">Легендарная криминальная сага в открытом мире. Калифорния ждёт — исследуй Сан-Андреас!</div>
+                    <div class="card-title">Paper.io 2</div>
+                    <div class="card-desc">Захватывай территории в реальном времени! Сражайся с игроками онлайн и расширяй своё владение!</div>
                     <span class="card-badge">Доступно</span>
                 </div>
             </div>
@@ -592,8 +592,7 @@
             "Привет! Рад видеть тебя на Insaf Studio! 🦊",
             "Уютно тут, правда? ☕",
             "Не забудь поставить лайк под видосом! ❤️",
-            "Марафон в самом разгаре, не пропусти реликвию! 🔥",
-            "Присаживайся поудобнее, устроим марафон! 🍿",
+            "Присаживайся поудобнее, устроим просмотр! 🍿",
             "*Фыр-фыр*... А пиксельный снег вкусный! ❄️",
             "Я тут за главного, пока автора нет на линии 👑",
             "Смотришь видео? А я смотрю на тебя 👀",
@@ -617,15 +616,6 @@
             setTimeout(() => petSpeech.classList.remove('active'), 2500);
         };
         updatePetVisibility();
-
-        // --- ОНЛАЙН СЧЕТЧИК (СИМУЛЯЦИЯ) ---
-        function updateOnlineCounter() {
-            const count = Math.floor(Math.random() * 5) + 3; // от 3 до 7 человек
-            const el = document.getElementById('online-users-count');
-            if (el) el.innerText = count;
-        }
-        setInterval(updateOnlineCounter, 10000);
-        updateOnlineCounter();
 
         // Прогресс-бар скролла
         window.addEventListener('scroll', () => {
@@ -692,7 +682,7 @@
         window.launchGame = function(url) {
             const titles = {
                 'gd.html': 'Geometry Dash — Insaf Studio',
-                'gtasan.html': 'GTA San Andreas — Insaf Studio'
+                'paperio2.html': 'Paper.io 2 — Insaf Studio'
             };
             const titleText = titles[url] || 'Игра — Insaf Studio';
             document.getElementById('game-title-text').innerText = titleText;
@@ -717,6 +707,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
@@ -728,6 +720,7 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getFirestore(app);
 
         onSnapshot(doc(db, "settings", "maintenance"), (docSnap) => {
@@ -736,6 +729,43 @@
                 window.location.href = "maintenance.html";
             }
         });
+
+        // --- ОНЛАЙН СЧЕТЧИК (REAL-TIME через Firebase RTDB) ---
+        const rtdb = getDatabase(app);
+        let onlineListener = null;
+        function initOnlineCounter() {
+            const el = document.getElementById('online-users-count');
+            if (!el) return;
+            onlineListener = onValue(ref(rtdb, 'online/users'), (snap) => {
+                const count = snap.exists() ? Object.keys(snap.val()).length : 0;
+                el.innerText = count;
+            }, (err) => {
+                console.warn('Ошибка онлайна:', err.code || err.message);
+                el.innerText = '—';
+            });
+        }
+        function setOnline(uid) {
+            set(ref(rtdb, 'online/users/' + uid), { lastSeen: Date.now(), uid });
+        }
+        function clearOnline(uid) {
+            remove(ref(rtdb, 'online/users/' + uid));
+            if (onlineListener) { onlineListener(); onlineListener = null; }
+        }
+        if (auth.currentUser) setOnline(auth.currentUser.uid);
+        auth.onAuthStateChanged((user) => {
+            if (auth.currentUser && !onlineListener) initOnlineCounter();
+            if (user) setOnline(user.uid);
+            else {
+                clearOnline(auth.lastUid || '');
+                if (onlineListener) { onlineListener(); onlineListener = null; }
+            }
+        });
+        auth.onAuthStateChanged((u) => { if (u) auth.lastUid = u.uid; });
+        window.addEventListener('beforeunload', () => {
+            if (auth.currentUser) clearOnline(auth.currentUser.uid);
+            if (onlineListener) { onlineListener(); onlineListener = null; }
+        });
+        initOnlineCounter();
     </script>
 </body>
 </html>

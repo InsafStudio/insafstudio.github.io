@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Инсаф Студио — v1.6.0: Марафон Edition</title>
+    <title>Инсаф Студио — v1.7.0</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/BKTj140N/image.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/BKTj140N/image.png">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
             --glow-effect: 0 0 20px rgba(255, 0, 85, 0.35);
             --glass-blur: blur(12px);
             
-            --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --site-font: 'Arial Black', 'Segoe UI', sans-serif;
             --border-radius-base: 16px;
             --border-radius-round: 30px;
         }
@@ -79,25 +79,6 @@
         }
         .pet-speech-bubble.active { opacity: 1; }
 
-        /* Прогресс-бар марафона */
-        .marathon-progress-container {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--card-border);
-            height: 12px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 15px 0 20px 0;
-            position: relative;
-        }
-        .marathon-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-color), #8a2be2);
-            width: 0%;
-            transition: width 0.4s ease;
-            box-shadow: var(--glow-effect);
-        }
-
         /* Индикатор Онлайн */
         .online-counter-badge {
             display: inline-flex;
@@ -136,125 +117,6 @@
             border-radius: 6px;
             margin-left: 6px;
         }
-
-        /* ПРАЗДНИЧНЫЙ БАННЕР МАРАФОНА */
-        .bday-banner {
-            background: linear-gradient(90deg, #ff416c, #8a2be2);
-            color: #fff;
-            padding: 12px 20px;
-            text-align: center;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-            position: relative;
-            z-index: 99;
-        }
-        .bday-banner-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .push-subscribe-banner {
-            background: rgba(255, 0, 85, 0.1);
-            border: 1px dashed var(--accent-color);
-            padding: 10px 15px;
-            border-radius: 12px;
-            margin-top: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-        }
-        .push-sub-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.2s ease;
-        }
-        .push-sub-btn:hover { box-shadow: var(--glow-effect); }
-
-        /* ROADMAP */
-        .roadmap-section {
-            margin: 35px 0;
-            padding: 24px;
-            background: var(--card-bg);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--card-border);
-            border-radius: var(--border-radius-base);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .roadmap-title {
-            text-align: center;
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: #fff;
-            background: linear-gradient(180deg, #fff 0%, #d1d5db 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        body.light-theme .roadmap-title {
-            background: none;
-            -webkit-background-clip: initial;
-            -webkit-text-fill-color: initial;
-            color: #111827;
-        }
-        .roadmap-subtitle {
-            text-align: center;
-            color: var(--card-text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
-        }
-        .day-card {
-            background: rgba(0,0,0,0.25);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 14px 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        body.light-theme .day-card { background: rgba(255,255,255,0.7); }
-        .day-card.unlocked { border-color: rgba(59, 130, 246, 0.5); }
-        .day-card.current {
-            border-color: var(--accent-color);
-            background: rgba(255, 0, 85, 0.08);
-            transform: translateY(-3px);
-            box-shadow: var(--glow-effect);
-        }
-        .day-badge { font-size: 0.75rem; color: var(--card-text-muted); font-weight: 600; }
-        .day-status { font-size: 0.7rem; font-weight: bold; margin: 6px 0; color: #666; }
-        .day-card.current .day-status { color: var(--accent-color); }
-        .day-card h3 { font-size: 0.9rem; color: #fff; margin: 4px 0 12px 0; font-weight: 700; }
-        body.light-theme .day-card h3 { color: #111827; }
-        
-        .watch-btn {
-            background: rgba(255,255,255,0.05);
-            color: var(--card-text-muted);
-            border: 1px solid var(--card-border);
-            padding: 8px 10px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .watch-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .day-card.unlocked .watch-btn { background: #3b82f6; color: #fff; border: none; }
-        .day-card.current .watch-btn { background: var(--accent-color); color: #fff; border: none; box-shadow: var(--glow-effect); }
 
         /* TELEGRAM COMMUNITY BOX */
         .tg-community-box {
@@ -614,6 +476,36 @@
         .social-circle-btn { background: rgba(255,255,255,0.03); color: #fff; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 12px; text-decoration: none; font-size: 13px; font-weight: 700; border: 1px solid var(--card-border); }
         .footer-copyright { max-width: 1200px; margin: 30px auto 0 auto; padding-top: 15px; border-top: 1px solid var(--card-border); text-align: center; font-size: 12px; color: #4b5563; }
 
+        /* ——— LIGHT THEME OVERRIDES ——— */
+        body.light-theme .nav-link:hover,
+        body.light-theme .nav-link.active { color: var(--accent-color); }
+        body.light-theme .modal-header h3,
+        body.light-theme .settings-label,
+        body.light-theme .theme-cycle-btn,
+        body.light-theme .comments-title,
+        body.light-theme .comment-author,
+        body.light-theme .card-title,
+        body.light-theme .meta-left #main-source { color: #111827; }
+        body.light-theme .theme-cycle-btn { background: rgba(0, 0, 0, 0.06); }
+        body.light-theme .reset-btn { background: rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.3); }
+        body.light-theme .comment-name-input,
+        body.light-theme .comment-input { background-color: rgba(0, 0, 0, 0.05); color: #111827; }
+        body.light-theme .share-btn,
+        body.light-theme .like-button,
+        body.light-theme .next-btn { color: #111827; }
+        body.light-theme .search-input { color: #111827; }
+        body.light-theme .comment-user-badge { color: #111827; background: rgba(0, 0, 0, 0.06); }
+        body.light-theme footer { background: #f9fafb; }
+        body.light-theme .footer-brand h3 { color: #111827; }
+        body.light-theme .social-circle-btn { color: #111827; background: rgba(0, 0, 0, 0.05); }
+        body.light-theme .pet-speech-bubble { background: rgba(30, 30, 40, 0.95); color: #fff; }
+        body.light-theme #profile-modal-name,
+        body.light-theme .profile-modal-name { color: #111827 !important; }
+        body.light-theme .settings-value { color: #111827 !important; }
+        body.light-theme .video-description { color: #374151; }
+        body.light-theme .comment-action-link:hover { color: var(--accent-color); }
+        body.light-theme .comment-form { background: rgba(0, 0, 0, 0.04); }
+
         @media (max-width: 480px) {
             header { padding: 10px 12px; flex-wrap: wrap; }
             .header-left { width: 100%; justify-content: space-between; }
@@ -625,7 +517,6 @@
             .comment-form-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
             .comment-btn { width: 100%; margin-left: 0 !important; }
             
-            .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
             .tg-community-box { flex-direction: column; text-align: center; }
             .tg-btn { width: 100%; justify-content: center; }
         }
@@ -640,18 +531,6 @@
     <div id="site-pet" onclick="window.pokePet()" title="Твой компаньон">
         🦊
         <div class="pet-speech-bubble" id="pet-speech">Привет! Рад видеть тебя на Insaf Studio! 🦊</div>
-    </div>
-
-    <!-- БАННЕР МАРАФОНА -->
-    <div class="bday-banner">
-        <div class="bday-banner-content">
-            <span>🎉</span>
-            <p><strong>Insaf Studio v1.6.0: Марафон Edition!</strong> С 12 по 18 ноября в 17:00 МСК — ежедневные премьеры!</p>
-            <div class="push-subscribe-banner" id="push-banner-box" style="display:none;">
-                <span>🔔 Включить пуши:</span>
-                <button class="push-sub-btn" onclick="window.requestPushPermission()">Разрешить</button>
-            </div>
-        </div>
     </div>
 
     <!-- МИКРО-ФИЧИ -->
@@ -685,7 +564,7 @@
         <div class="header-left">
             <a href="#" class="logo" onclick="window.selectNav('all', this)">
                 <img src="https://i.ibb.co/BKTj140N/image.png" alt="Инсаф Студио">
-                <span>Marathon Edition</span>
+                <span>v1.7.0</span>
             </a>
             <nav class="main-nav">
                 <button class="nav-link active" onclick="window.selectNav('all', this)">Главная</button>
@@ -744,7 +623,7 @@
             
             <div class="settings-item-row">
                 <span class="settings-label">Версия проекта:</span>
-                <span class="version-tag-style">v1.6.0: Марафон Edition 🚀</span>
+                <span class="version-tag-style">v1.7.0 🚀</span>
             </div>
 
             <button class="changelog-btn" onclick="openChangelogModal()">📜 История обновлений (Changelog)</button>
@@ -811,7 +690,7 @@
                 
                 <div id="author-status-container" class="author-status-box">
                     <span class="status-icon">📢</span> 
-                    <span id="author-status-text">Статус: Запуск марафона v1.6.0 с 12 ноября в 17:00 МСК! 📦</span>
+                    <span id="author-status-text">Статус: Сайт обновлён до v1.7.0! 🚀</span>
                 </div>
 
                 <div class="video-meta">
@@ -829,32 +708,6 @@
                 <p class="video-description" id="main-desc">Подгружаем список доступных серий из базы данных...</p>
             </div>
         </div>
-
-        <!-- КАЛЕНДАРЬ МАРАФОНА -->
-        <section class="roadmap-section">
-            <h2 class="roadmap-title">📅 Марафон видео (12–18 ноября, 17:00 МСК)</h2>
-            <p class="roadmap-subtitle">Каждый день новые эксклюзивные релизы!</p>
-
-            <!-- Шкала прогресса марафона -->
-            <div class="marathon-progress-container" title="Прогресс марафонской недели">
-                <div class="marathon-progress-bar" id="marathonProgressBar"></div>
-            </div>
-
-            <div class="roadmap-grid" id="roadmapGrid">
-                <div style="grid-column: 1 / -1; text-align: center; color: var(--card-text-muted); padding: 20px;">⏳ Загрузка событий марафона из Firebase...</div>
-            </div>
-
-            <div class="tg-community-box">
-                <div class="tg-info">
-                    <h3>💬 Обсуждай ролики марафона вместе с нами</h3>
-                    <p>Делись впечатлениями и забирай анонсы раньше всех в нашем Telegram-канале.</p>
-                </div>
-                <a href="https://t.me/+7dzv_7FxPmA1YjBi" target="_blank" class="tg-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 7.5a2.25 2.25 0 0 0 .126 4.137l4.9 1.634 1.9 5.7a1 1 0 0 0 1.6.4l2.9-2.9 5.2 3.9a2.25 2.25 0 0 0 3.5-1.5l3.5-16.5a2.25 2.25 0 0 0-2.104-2.586z"/></svg>
-                    Перейти в Telegram
-                </a>
-            </div>
-        </section>
 
         <!-- КОММЕНТАРИИ -->
         <div class="comments-section">
@@ -935,6 +788,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, getDocs, doc, runTransaction, setDoc, getDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
@@ -945,9 +799,9 @@
           appId: "1:767081007202:web:f511d4fd8f20b9af87e93b"
         };
 
-        const app = initializeApp(firebaseConfig); 
+        const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app); 
+        const auth = getAuth(app);
 
         // --- ЗВУКОВЫЕ ЭФФЕКТЫ UI ---
         let sfxEnabled = localStorage.getItem('sfxEnabled') !== 'false';
@@ -1003,8 +857,11 @@
                 });
             }
         }
+        // Пауза анимации снега пока страница не загрузится — экономит ресурсы
+        let _snowPaused = true;
         function drawSnow() {
-            if (!snowEnabled) { snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height); return; }
+            if (!_snowPaused && !snowEnabled) { snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height); }
+            if (_snowPaused || !snowEnabled) { requestAnimationFrame(drawSnow); return; }
             snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
             snowCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
             snowCtx.beginPath();
@@ -1022,13 +879,14 @@
             snowEnabled = !snowEnabled;
             localStorage.setItem('snowEnabled', snowEnabled);
             document.getElementById('snow-toggle-btn').innerText = snowEnabled ? "❄️ Вкл" : "☀️ Выкл";
-            if (snowEnabled) drawSnow();
-            else snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+            if (snowEnabled) { _snowPaused = false; drawSnow(); }
+            else { _snowPaused = true; snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height); }
         };
+        // Запуск снега после загрузки страницы — не мешать Firebase
+        window.addEventListener('load', () => { setTimeout(() => { if (snowEnabled) _snowPaused = false; }, 800); });
         document.getElementById('snow-toggle-btn').innerText = snowEnabled ? "❄️ Вкл" : "☀️ Выкл";
         window.addEventListener('resize', initSnow);
         initSnow();
-        drawSnow();
 
         // --- ИНТЕРАКТИВНЫЙ ПИТОМЕЦ ---
         let petEnabled = localStorage.getItem('petEnabled') === 'true';
@@ -1038,8 +896,7 @@
 			"Привет! Рад видеть тебя на Insaf Studio! 🦊",
             "Уютно тут, правда? ☕",
             "Не забудь поставить лайк под видосом! ❤️",
-            "Марафон в самом разгаре, не пропусти реликвию! 🔥",
-            "Присаживайся поудобнее, устроим марафон! 🍿",
+            "Присаживайся поудобнее, устроим просмотр! 🍿",
             "*Фыр-фыр*... А пиксельный снег вкусный! ❄️",
             "Я тут за главного, пока автора нет на линии 👑",
             "Смотришь видео? А я смотрю на тебя 👀",
@@ -1064,101 +921,63 @@
         };
         updatePetVisibility();
 
-        // --- ОНЛАЙН СЧЕТЧИК (СИМУЛЯЦИЯ) ---
-        function updateOnlineCounter() {
-            const count = Math.floor(Math.random() * 5) + 3; // от 3 до 7 человек
+        // --- ОНЛАЙН СЧЕТЧИК (РЕАЛЬНЫЙ ЧЕРЕЗ FIREBASE RTDB) ---
+        const rtdb = getDatabase(app);
+        let onlineListener = null;
+        function initOnlineCounter() {
             const el = document.getElementById('online-users-count');
-            if (el) el.innerText = count;
+            if (!el) return;
+            // Слушаем кол-во онлайн-пользователей
+            onlineListener = onValue(ref(rtdb, 'online/users'), (snap) => {
+                const count = snap.exists() ? Object.keys(snap.val()).length : 0;
+                el.innerText = count;
+            }, (err) => {
+                console.warn('Ошибка онлайна:', err.code || err.message);
+                el.innerText = '—';
+            });
         }
-        setInterval(updateOnlineCounter, 10000);
-        updateOnlineCounter();
+        function setOnline(uid) {
+            set(ref(rtdb, 'online/users/' + uid), { lastSeen: Date.now(), uid });
+        }
+        function clearOnline(uid) {
+            remove(ref(rtdb, 'online/users/' + uid));
+            if (onlineListener) { onlineListener(); onlineListener = null; }
+        }
+        if (auth.currentUser) setOnline(auth.currentUser.uid);
+        onAuthStateChanged(auth, (user) => {
+            if (auth.currentUser && !onlineListener) {
+                // Перезапуск слушателя если был выключен (выход+вход без перезагрузки)
+                initOnlineCounter();
+            }
+            if (user) {
+                setOnline(user.uid);
+            } else {
+                clearOnline(auth.lastUid || '');
+                if (onlineListener) { onlineListener(); onlineListener = null; }
+            }
+        });
+        // Сохраняем UID при каждом событии, чтобы не потерять при выходе
+        auth.onAuthStateChanged((u) => { if (u) auth.lastUid = u.uid; });
+        // Очищаем при уходе со страницы
+        window.addEventListener('beforeunload', () => {
+            if (auth.currentUser) clearOnline(auth.currentUser.uid);
+            if (onlineListener) { onlineListener(); onlineListener = null; }
+        });
+        initOnlineCounter();
 
         window.requestPushPermission = async function() {
             if (!("Notification" in window)) return;
             let permission = await Notification.requestPermission();
             if (permission === "granted") {
-                document.getElementById('push-banner-box').style.display = 'none';
-                new Notification("🔔 Инсаф Студио", { body: "Уведомления включены! Старт марафона 12 ноября в 17:00 МСК.", icon: "https://i.ibb.co/BKTj140N/image.png" });
+                const pushBox = document.getElementById('push-banner-box');
+                if (pushBox) pushBox.style.display = 'none';
+                new Notification("🔔 Инсаф Студио", { body: "Уведомления включены! Следите за новыми видео на сайте.", icon: "https://i.ibb.co/BKTj140N/image.png" });
             }
         };
-        if ("Notification" in window && Notification.permission === "default") {
-            document.getElementById('push-banner-box').style.display = 'inline-flex';
+        const pushBannerBox = document.getElementById('push-banner-box');
+        if (pushBannerBox && "Notification" in window && Notification.permission === "default") {
+            pushBannerBox.style.display = 'inline-flex';
         }
-
-        let marathonDaysCache = [];
-        let marathonTimerInterval = null;
-
-        function renderMarathonUI() {
-            const grid = document.getElementById('roadmapGrid');
-            const progressBar = document.getElementById('marathonProgressBar');
-            if (!grid || !marathonDaysCache.length) return;
-            grid.innerHTML = "";
-            const now = Date.now();
-
-            let unlockedCount = 0;
-            marathonDaysCache.forEach(item => {
-                const releaseTimestamp = item.releaseTime ? new Date(item.releaseTime).getTime() : 0;
-                const isUnlocked = now >= releaseTimestamp;
-                if (isUnlocked) unlockedCount++;
-                const diffSeconds = Math.max(0, Math.floor((releaseTimestamp - now) / 1000));
-
-                const card = document.createElement('div');
-                let cardClass = "day-card";
-                let statusText = "";
-                let buttonHTML = "";
-
-                if (isUnlocked) {
-                    cardClass += " unlocked current";
-                    statusText = "🔥 СМОТРЕТЬ";
-                    buttonHTML = `<button class="watch-btn" onclick="window.playMarathonVideo('${item.videoUrl}', '${window.escapeHtml(item.title)}')">Смотреть</button>`;
-                } else {
-                    cardClass += " locked";
-                    const hours = Math.floor(diffSeconds / 3600);
-                    const mins = Math.floor((diffSeconds % 3600) / 60);
-                    const secs = diffSeconds % 60;
-                    statusText = `⏳ До выхода: ${hours}ч ${mins}м ${secs}с`;
-                    buttonHTML = `<button class="watch-btn" disabled>Заблокировано</button>`;
-                }
-
-                card.className = cardClass;
-                card.innerHTML = `<div class="day-badge">День ${item.day} • ${item.dateStr || ''}</div><div class="day-status">${statusText}</div><h3>${window.escapeHtml(item.title)}</h3>${buttonHTML}`;
-                grid.appendChild(card);
-            });
-
-            if (progressBar) {
-                let percent = (unlockedCount / marathonDaysCache.length) * 100;
-                progressBar.style.width = percent + '%';
-            }
-        }
-
-        function initFirebaseMarathon() {
-            onSnapshot(doc(db, "settings", "marathon"), (docSnap) => {
-                if (docSnap.exists() && docSnap.data().days) {
-                    marathonDaysCache = docSnap.data().days;
-                } else {
-                    marathonDaysCache = [
-                        { day: 1, dateStr: "12 ноя", title: "Премьера #1", releaseTime: "2026-11-12T15:00:00+03:00", videoUrl: "" },
-                        { day: 2, dateStr: "13 ноя", title: "Видео #2", releaseTime: "2026-11-13T15:00:00+03:00", videoUrl: "" },
-                        { day: 3, dateStr: "14 ноя", title: "Видео #3", releaseTime: "2026-11-14T17:00:00+03:00", videoUrl: "" },
-                        { day: 4, dateStr: "15 ноя", title: "Видео #4", releaseTime: "2026-11-15T17:00:00+03:00", videoUrl: "" },
-                        { day: 5, dateStr: "16 ноя", title: "Видео #5", releaseTime: "2026-11-16T17:00:00+03:00", videoUrl: "" },
-                        { day: 6, dateStr: "17 ноя", title: "Видео #6", releaseTime: "2026-11-17T17:00:00+03:00", videoUrl: "" },
-                        { day: 7, dateStr: "18 ноя", title: "Финал марафона", releaseTime: "2026-11-18T17:00:00+03:00", videoUrl: "" }
-                    ];
-                }
-                renderMarathonUI();
-                if (!marathonTimerInterval) marathonTimerInterval = setInterval(renderMarathonUI, 1000);
-            });
-        }
-        initFirebaseMarathon();
-
-        window.playMarathonVideo = function(videoUrl, title) {
-            if (videoUrl && videoUrl.trim() !== "") {
-                window.changeVideo('bday_' + Date.now(), videoUrl, '🎉 ' + title + ' (Марафон Edition)', 'Специальный эксклюзивный видео-выпуск марафона Insaf Studio!', 'Insaf Studio Marathon');
-            } else {
-                window.showNotification("🎉 Марафон", "Ссылка на видео подгружается на сервер!");
-            }
-        };
 
         window.openChangelogModal = async function() {
             const modal = document.getElementById('changelog-modal');
@@ -1264,6 +1083,218 @@
         window.currentReplyParentId = null;
         window.currentCommentSort = 'newest';
         let unsubscribeComments = null, unsubscribeViews = null, unsubscribeLikes = null;
+
+        // ═══════════════════════════════════════════════════════════════
+        //  🔒 ANTI-CHEAT / АНТИ-НАКРУТКА SYSTEM
+        // ═══════════════════════════════════════════════════════════════
+        const _AC = (() => {
+            const DB_NAME = 'insaf_anticheat';
+            const DB_VERSION = 1;
+            const DEVICE_TTL_MS = 7 * 24 * 3600 * 1000;      // 7 дней
+            const VIEW_COOLDOWN_MS = 10 * 60 * 1000;          // 10 мин на просмотр
+            const LIKE_RATE_LIMIT_MS = 30 * 1000;             // 30 сек между лайками
+            const MIN_WATCH_SEC = 5;                          // минимум секунд для засчёта
+            const SCROLL_DEPTH_THRESHOLD = 0.30;              // 30% скролла нужно
+            const PAGE_PRESENT_TIMEOUT_MS = 5000;             // 5 сек присутствия
+
+            let indexedDB = null;
+            let deviceFingerprint = null;
+            let pagePresentStart = null;
+            let lastViewCountedTime = {};   // videoId → timestamp of last counted view
+            let lastLikeActionTime = {};    // commentId → timestamp
+            let suspiciousCounts = {};      // videoId → count of rejected attempts
+            let _viewLogSubs = {};          // videoId → unsubscribe
+
+            function generateFingerprint() {
+                const c = navigator.userAgent + navigator.language + screen.colorDepth
+                    + screen.width + screen.height + navigator.hardwareConcurrency
+                    + new Date().getTimezoneOffset();
+                let h = 5381;
+                for (let i = 0; i < c.length; i++) h = (h * 33) ^ c.charCodeAt(i);
+                return 'fp_' + Math.abs(h).toString(36);
+            }
+
+            async function openDB() {
+                return new Promise((resolve, reject) => {
+                    const req = indexedDB.open(DB_NAME, DB_VERSION);
+                    req.onupgradeneeded = e => {
+                        const db = e.target.result;
+                        if (!db.objectStoreNames.contains('devices')) db.createObjectStore('devices', { keyPath: 'id' });
+                        if (!db.objectStoreNames.contains('view_log')) db.createObjectStore('view_log', { keyPath: 'id' });
+                        if (!db.objectStoreNames.contains('like_log')) db.createObjectStore('like_log', { keyPath: 'id' });
+                    };
+                    req.onsuccess = () => resolve(req.result);
+                    req.onerror = () => reject(req.error);
+                });
+            }
+
+            function dbGet(store, key) {
+                return new Promise((resolve) => {
+                    try {
+                        const tx = indexedDB.transaction(store, 'readonly');
+                        const st = tx.objectStore(store);
+                        const r = st.get(key);
+                        r.onsuccess = () => resolve(r.result);
+                        r.onerror = () => resolve(null);
+                    } catch(e) { resolve(null); }
+                });
+            }
+
+            function dbPut(store, item) {
+                return new Promise((resolve) => {
+                    try {
+                        const tx = indexedDB.transaction(store, 'readwrite');
+                        tx.objectStore(store).put(item);
+                        tx.oncomplete = () => resolve(true);
+                        tx.onerror = () => resolve(false);
+                    } catch(e) { resolve(false); }
+                });
+            }
+
+            function dbDelete(store, key) {
+                try { indexedDB.transaction(store, 'readwrite').objectStore(store).delete(key); } catch(e) {}
+            }
+
+            function now() { return Date.now(); }
+
+            async function initDevice() {
+                deviceFingerprint = generateFingerprint();
+                const stored = await dbGet('devices', deviceFingerprint);
+                if (stored && stored.ts && now() - stored.ts < DEVICE_TTL_MS) return stored;
+                const device = { id: deviceFingerprint, ts: now(), views: [], likes: [] };
+                await dbPut('devices', device);
+                return device;
+            }
+
+            async function init() {
+                try {
+                    indexedDB = window.indexedDB;
+                    await openDB();
+                    await initDevice();
+                } catch(e) { console.warn('[AC] IndexedDB не доступен:', e); }
+            }
+
+            function logRejected(videoId, reason) {
+                suspiciousCounts[videoId] = (suspiciousCounts[videoId] || 0) + 1;
+                if (!indexedDB) return;
+                const key = `${videoId}_reject_${now()}`;
+                dbPut('view_log', { id: key, videoId, ts: now(), reason, fp: deviceFingerprint });
+            }
+
+            function calcScrollDepth() {
+                return (window.scrollY + window.innerHeight) / (document.body.scrollHeight || 1);
+            }
+
+            function startWatchTimer() {
+                pagePresentStart = Date.now();
+            }
+
+            function checkWatchDuration() {
+                if (!pagePresentStart) return false;
+                return (Date.now() - pagePresentStart) / 1000 >= MIN_WATCH_SEC;
+            }
+
+            async function isViewCooldownExempt(videoId) {
+                if (!indexedDB || !videoId) return true;
+                const last = lastViewCountedTime[videoId];
+                if (!last) return true;
+                return (now() - last) >= VIEW_COOLDOWN_MS;
+            }
+
+            async function processViewAttempt(videoId) {
+                if (!videoId) return { counted: false, reason: 'no-video-id' };
+                const scrollD = calcScrollDepth();
+                const watchOk = checkWatchDuration();
+                const cdOk = await isViewCooldownExempt(videoId);
+
+                if (!watchOk) { logRejected(videoId, 'too_short_watch'); return { counted: false, reason: 'short_watch' }; }
+                if (scrollD < SCROLL_DEPTH_THRESHOLD) { logRejected(videoId, 'low_scroll_depth:' + Math.round(scrollD*100)+'%'); return { counted: false, reason: 'low_scroll' }; }
+                if (!cdOk) { logRejected(videoId, 'cooldown_active'); return { counted: false, reason: 'cooldown' }; }
+
+                // All checks passed — allow view
+                lastViewCountedTime[videoId] = now();
+                // IndexedDB запись — неблокирующая (не ждём)
+                if (indexedDB) {
+                    const dev = dbGet('devices', deviceFingerprint).then(d => {
+                        if (d) { d.views.push({ ts: now(), v: videoId }); d.views = d.views.slice(-50); return dbPut('devices', d); }
+                    }).catch(()=>{});
+                }
+                return { counted: true, scrollPct: Math.round(scrollD*100), watchSec: Math.round((Date.now()-pagePresentStart)/1000) };
+            }
+
+            function startPagePresence() {
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'visible') startWatchTimer();
+                    else pagePresentStart = null;
+                });
+                window.addEventListener('load', () => { setTimeout(startWatchTimer, 500); });
+                window.addEventListener('scroll', () => {}, { passive: true });
+            }
+
+            // === COMMENT LIKES PROTECTION ===
+            async function checkLikeRateLimit(commentId) {
+                if (!commentId) return false;
+                const last = lastLikeActionTime[commentId];
+                if (!last) return true;
+                if ((now() - last) < LIKE_RATE_LIMIT_MS) {
+                    logRejected(commentId, 'like_rate_limit');
+                    return false;
+                }
+                return true;
+            }
+
+            function recordLikeAction(commentId) {
+                lastLikeActionTime[commentId] = now();
+                if (indexedDB) {
+                    dbPut('like_log', { id: `${deviceFingerprint}_${commentId}`, fp: deviceFingerprint, commentId, ts: now() });
+                }
+            }
+
+            // === FIREBASE LOGGING (батч, без док-созданий на каждый клик) ===
+            const _acBatch = { verified: [], rejected: [], timer: null };
+
+            function enqueueLog(videoId, eventType, data) {
+                const entry = { videoId, eventType, fp: deviceFingerprint, ts: now(), userAgent: navigator.userAgent.slice(0, 60) };
+                if (eventType === 'rejected') _acBatch.rejected.push(entry);
+                else _acBatch.verified.push(entry);
+                if (!_acBatch.timer) {
+                    _acBatch.timer = setTimeout(flushLogs, 5000); // раз в 5 сек батч
+                }
+            }
+
+            async function flushLogs() {
+                _acBatch.timer = null;
+                try {
+                    const bV = _acBatch.verified.splice(0, 20);
+                    const bR = _acBatch.rejected.splice(0, 20);
+                    if (bV.length || bR.length) {
+                        await Promise.all([
+                            bV.map(e => setDoc(doc(db, 'stats', e.videoId, 'anti_cheat_logs', `${e.ts}_v`), { type: 'verified_view', ...e }, { merge: true }).catch(()=>{})),
+                            bR.map(e => setDoc(doc(db, 'stats', e.videoId, 'anti_cheat_logs', `${e.ts}_r`), { type: 'rejected', ...e }, { merge: true }).catch(()=>{}))
+                        ]);
+                    }
+                } catch(e) { /* silent */ }
+                if (_acBatch.verified.length > 0 || _acBatch.rejected.length > 0) {
+                    _acBatch.timer = setTimeout(flushLogs, 3000);
+                }
+            }
+
+            async function fetchFlaggedStats(videoId) {
+                try {
+                    const snap = await getDocs(collection(db, 'stats', videoId, 'anti_cheat_logs'));
+                    let rejected = 0, verified = 0;
+                    snap.forEach(d => { const t = d.data().type; if (t==='rejected') rejected++; else verified++; });
+                    return { rejected, verified, total: snap.size };
+                } catch(e) { return { rejected: 0, verified: 0, total: 0 }; }
+            }
+
+            window.AntiCheat = { init, startPagePresence, processViewAttempt, checkLikeRateLimit, recordLikeAction, logToFirestore: enqueueLog, fetchFlaggedStats, suspiciousCounts };
+            return { init, startPagePresence, processViewAttempt, checkLikeRateLimit, recordLikeAction, logToFirestore: enqueueLog, fetchFlaggedStats, suspiciousCounts };
+        })();
+
+        // Запуск AntiCheat после полного создания объекта
+        _AC.init().then(() => { _AC.startPagePresence(); });
+
         const themes = [{ name: 'dark', label: '🌙 Тёмная' }, { name: 'light', label: '☀️ Светлая' }, { name: 'minecraft', label: '⛏️ Майнкрафт' }, { name: 'classic', label: '📜 Классика' }];
         let currentThemeIndex = 0;
         let categoryNames = { 'all': 'Все материалы', 'games': 'Игры / Летсплеи', 'cinema': 'Сериалы и Фильмы', 'ilfatik': 'Ильфат' };
@@ -1401,6 +1432,8 @@
             if (idx !== -1 && idx < window.allVideos.length - 1) window.changeVideo(window.allVideos[idx+1].id, window.allVideos[idx+1].url, window.allVideos[idx+1].title, window.allVideos[idx+1].desc, window.allVideos[idx+1].src);
         };
 
+        let _lastViewCountedVideo = null; // только один просчёт на видео за сессию
+
         function syncViewsCommentsAndLikes() {
             if (!window.currentVideoId) return;
             if (unsubscribeComments) unsubscribeComments();
@@ -1409,18 +1442,38 @@
 
             const viewsRef = doc(db, 'stats', window.currentVideoId);
             unsubscribeViews = onSnapshot(viewsRef, (docSnap) => {
-                document.getElementById('main-views').innerText = '👁️ Просмотры: ' + parseInt(docSnap.exists() && docSnap.data().views || 0).toLocaleString();
+                const raw = parseInt(docSnap.exists() && docSnap.data().views || 0);
+                const verified = parseInt(docSnap.exists() && docSnap.data().verifiedViews || 0);
+                const el = document.getElementById('main-views');
+                if (el) {
+                    if (verified > 0 && verified < raw) {
+                        el.innerHTML = `👁️ Просмотры: <span style="color:#4ade80">${verified.toLocaleString()}</span><span style="color:var(--card-text-muted);font-size:11px;margin-left:6px;">(raw: ${raw.toLocaleString()})</span>`;
+                    } else {
+                        el.innerText = '👁️ Просмотры: ' + raw.toLocaleString();
+                    }
+                }
             });
 
-            if (!localStorage.getItem('viewed_' + window.currentVideoId)) {
-                setTimeout(() => {
-                    runTransaction(db, async (t) => {
-                        let sf = await t.get(viewsRef);
-                        if (!sf.exists()) t.set(viewsRef, { views: 1 }, { merge: true });
-                        else t.update(viewsRef, { views: (sf.data().views || 0) + 1 });
-                    });
-                    localStorage.setItem('viewed_' + window.currentVideoId, 'true');
-                }, 1500);
+            // === АНТИ-НАКРУТКА: просчёт просмотра (только один раз на видео) ===
+            if (_lastViewCountedVideo !== window.currentVideoId) {
+                _AC.processViewAttempt(window.currentVideoId).then(res => {
+                    if (res.counted) {
+                        runTransaction(db, async (t) => {
+                            let sf = await t.get(viewsRef);
+                            const newVerified = (sf.exists() ? (sf.data().verifiedViews || 0) : 0) + 1;
+                            const newData = {};
+                            if (sf.exists()) Object.assign(newData, sf.data());
+                            newData.verifiedViews = newVerified;
+                            if (!newData.views) newData.views = 1;
+                            else newData.views += 1;
+                            t.set(viewsRef, newData, { merge: true });
+                        });
+                        _AC.logToFirestore(window.currentVideoId, 'verified_view', res);
+                    } else {
+                        _AC.logToFirestore(window.currentVideoId, 'rejected', res);
+                    }
+                });
+                _lastViewCountedVideo = window.currentVideoId;
             }
 
             unsubscribeLikes = onSnapshot(viewsRef, (docSnap) => {
@@ -1528,7 +1581,11 @@
             }).then(() => { input.value = ''; window.cancelReplyMode(); });
         };
 
-        window.likeComment = function(id) {
+        window.likeComment = async function(id) {
+            if (!window.currentVideoId || !id) return;
+            // Анти-чит: проверка лимита скорости
+            const ok = await _AC.checkLikeRateLimit(id);
+            if (!ok) { alert('⏳ Подождите 30 секунд перед следующим лайком.'); return; }
             const ref = doc(db, 'stats', window.currentVideoId, 'comments', id);
             runTransaction(db, async (t) => {
                 let sf = await t.get(ref);
@@ -1537,6 +1594,7 @@
                 t.update(ref, { likesCount: (sf.data().likesCount || 0) + (liked ? -1 : 1) });
                 if (liked) localStorage.removeItem('clike_' + id); else localStorage.setItem('clike_' + id, 'true');
             });
+            _AC.recordLikeAction(id);
         };
 
         window.deleteComment = async function(id) { if (confirm("Удалить?")) await deleteDoc(doc(db, 'stats', window.currentVideoId, 'comments', id)); };

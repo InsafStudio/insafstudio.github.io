@@ -6,86 +6,92 @@
     <title>Вход — Инсаф Студио</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/BKTj140N/image.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/BKTj140N/image.png">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         :root {
-            --bg-color: #08080c;
+            --bg-color: #0f0f13;
             --text-color: #f3f4f6;
-            --card-bg: rgba(22, 22, 33, 0.7);
-            --card-border: rgba(255, 255, 255, 0.06);
+            --card-bg: #1a1a24;
+            --card-border: rgba(255, 255, 255, 0.08);
             --card-text-muted: #9ca3af;
-            --accent-color: #ff0055;
-            --glow-effect: 0 0 20px rgba(255, 0, 85, 0.35);
-            --glass-blur: blur(12px);
+            --accent-color: #ff4757;
+            --glow-effect: 0 0 22px rgba(255, 71, 87, 0.35);
+            --glass-blur: blur(14px);
             --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
-            --border-radius-base: 16px;
+            --border-radius-base: 18px;
         }
 
-        /* --- КЛАССИЧЕСКАЯ ТЕМА --- */
+        /* --- Светлая тема --- */
+        body.light-theme {
+            --bg-color: #f4f6fa;
+            --text-color: #111827;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --card-text-muted: #4b5563;
+        }
+        /* --- Классическая тема --- */
         body.classic-theme {
             --bg-color: #0f0f0f;
-            --text-color: #ffffff;
             --card-bg: #1c1c1c;
             --card-border: #2b2b2b;
             --card-text-muted: #aaaaaa;
             --border-radius-base: 12px;
             background-image: none !important;
         }
-        body.classic-theme .login-card {
-            backdrop-filter: none !important;
-            border: 2px solid var(--card-border);
-        }
-
-        body.light-theme {
-            --bg-color: #f4f6fa;
-            --text-color: #111827;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --card-border: rgba(0, 0, 0, 0.1);
-            --card-text-muted: #4b5563;
-        }
-        body.minecraft-theme {
-            --bg-color: #4a3b2c;
-            --text-color: #ffff55;
-            --card-bg: #2a1e12;
-            --card-border: #140e08;
-            --card-text-muted: #aaaaaa;
-            --site-font: 'Press Start 2P', monospace;
-            --border-radius-base: 0px;
-        }
-
-        body.minecraft-theme * {
-            font-family: var(--site-font) !important;
-            letter-spacing: -0.5px;
-        }
-        body.minecraft-theme h2 { font-size: 12px !important; text-shadow: 2px 2px #000; }
-        body.minecraft-theme .input-field, 
-        body.minecraft-theme .btn, 
-        body.minecraft-theme .google-btn { font-size: 8px !important; padding: 10px !important; }
+        body.classic-theme .login-card { backdrop-filter: none !important; border: 2px solid var(--card-border); }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); }
-        
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            background-image: radial-gradient(circle at 80% 20%, rgba(255, 0, 85, 0.05) 0%, transparent 40%), radial-gradient(circle at 10% 70%, rgba(122, 0, 255, 0.05) 0%, transparent 45%);
+            background-image:
+                radial-gradient(circle at 80% 15%, rgba(255, 71, 87, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 10% 75%, rgba(122, 0, 255, 0.08) 0%, transparent 45%);
             background-attachment: fixed;
             padding: 20px;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: -150px; right: -150px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255, 71, 87, 0.12), transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -150px; left: -150px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(122, 0, 255, 0.12), transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .login-card {
+            position: relative;
+            z-index: 1;
             background: var(--card-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--card-border);
             border-radius: var(--border-radius-base);
             width: 100%;
-            max-width: 400px;
-            padding: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            max-width: 420px;
+            padding: 32px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
             text-align: center;
         }
 
@@ -93,35 +99,48 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
             text-decoration: none;
+            transition: transform 0.25s;
         }
+        .logo-area:hover { transform: translateY(-2px); }
         .logo-area img {
-            height: 42px;
+            height: 40px;
             border-radius: 10px;
             box-shadow: var(--glow-effect);
         }
         .logo-area span {
             color: #fff;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--accent-color), #9d00ff);
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 5px 11px;
+            border-radius: 9px;
             box-shadow: var(--glow-effect);
         }
 
+        /* --- ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ --- */
+        .auth-view {
+            display: none;
+            opacity: 0;
+        }
+        .auth-view.active {
+            display: block;
+            animation: fadeSlideIn 0.4s ease forwards;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         h2 {
-            font-size: 20px;
+            font-size: 21px;
             font-weight: 800;
             margin-bottom: 20px;
             letter-spacing: -0.5px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
+        .form-group { margin-bottom: 14px; text-align: left; }
         .form-group label {
             display: flex;
             justify-content: space-between;
@@ -132,23 +151,37 @@
             color: var(--text-color);
             opacity: 0.8;
         }
-
         .forgot-link {
             color: var(--accent-color);
             text-decoration: none;
             font-size: 11px;
             font-weight: 500;
+            cursor: pointer;
         }
-        .forgot-link:hover {
-            text-decoration: underline;
-        }
+        .forgot-link:hover { text-decoration: underline; }
 
+        /* --- ПОЛЯ ВВОДА С ИКОНКАМИ --- */
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .field-icon {
+            position: absolute;
+            left: 14px;
+            width: 18px;
+            height: 18px;
+            color: var(--card-text-muted);
+            pointer-events: none;
+            z-index: 2;
+        }
         .input-field {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(0,0,0,0.2);
+            padding: 13px 16px;
+            padding-left: 42px;
+            background: rgba(0, 0, 0, 0.22);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border-radius: 13px;
             color: #fff;
             font-size: 14px;
             outline: none;
@@ -157,14 +190,90 @@
         body.light-theme .input-field { background: #fff; color: #111827; }
         .input-field:focus {
             border-color: var(--accent-color);
-            background: rgba(0,0,0,0.3);
-            box-shadow: 0 0 12px rgba(255,0,85,0.15);
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 14px rgba(255, 71, 87, 0.15);
         }
+        .input-field::placeholder { color: var(--card-text-muted); opacity: 0.8; }
 
+        .password-toggle {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            color: var(--card-text-muted);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+            z-index: 2;
+        }
+        .password-toggle:hover { color: var(--accent-color); }
+        .password-toggle svg { width: 18px; height: 18px; }
+
+        /* --- КАПЧА-СЛАЙДЕР --- */
+        .captcha-wrap {
+            margin-top: 16px;
+            position: relative;
+        }
+        .captcha-track {
+            position: relative;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            overflow: hidden;
+            user-select: none;
+            touch-action: none;
+        }
+        .captcha-fill {
+            position: absolute;
+            left: 0; top: 0;
+            height: 100%;
+            width: 0;
+            background: rgba(34, 197, 94, 0.22);
+            border-radius: 24px;
+            transition: width 0.2s;
+        }
+        .captcha-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12.5px;
+            color: var(--card-text-muted);
+            pointer-events: none;
+        }
+        .captcha-knob {
+            position: absolute;
+            left: 0; top: 0;
+            height: 100%;
+            width: 48px;
+            background: var(--accent-color);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: grab;
+            z-index: 2;
+            box-shadow: var(--glow-effect);
+            transition: background 0.25s;
+        }
+        .captcha-knob:active { cursor: grabbing; }
+        .captcha-knob svg { width: 20px; height: 20px; }
+        .captcha-wrap.passed .captcha-knob { background: #22c55e; cursor: default; box-shadow: 0 0 20px rgba(34,197,94,0.5); }
+        .captcha-wrap.passed .captcha-fill { width: 100%; }
+        .captcha-wrap.passed .captcha-label { color: #22c55e; }
+
+        /* --- КНОПКИ --- */
         .btn {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--accent-color), #bc003f);
+            padding: 13px;
+            background: linear-gradient(135deg, var(--accent-color), #d92d3c);
             color: white;
             border: none;
             border-radius: 30px;
@@ -173,18 +282,58 @@
             font-size: 14px;
             transition: all 0.25s;
             box-shadow: var(--glow-effect);
-            margin-top: 10px;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        .btn:hover {
+        .btn:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 0 25px var(--accent-color);
+            box-shadow: 0 0 28px var(--accent-color);
         }
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn svg { width: 17px; height: 17px; }
+        .btn.loading::after {
+            content: '';
+            width: 14px; height: 14px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .ghost-btn {
+            width: 100%;
+            padding: 11px;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .ghost-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--card-text-muted); }
+        .ghost-btn svg { width: 16px; height: 16px; }
+        .ghost-btn.danger:hover { background: rgba(220, 38, 38, 0.15); border-color: #dc2626; color: #fca5a5; }
 
         .divider {
             display: flex;
             align-items: center;
             text-align: center;
-            margin: 20px 0;
+            margin: 18px 0;
             color: var(--card-text-muted);
             font-size: 12px;
         }
@@ -193,13 +342,13 @@
             flex: 1;
             border-bottom: 1px solid var(--card-border);
         }
-        .divider:not(:empty)::before { margin-right: .5em; }
-        .divider:not(:empty)::after { margin-left: .5em; }
+        .divider:not(:empty)::before { margin-right: 0.5em; }
+        .divider:not(:empty)::after { margin-left: 0.5em; }
 
         .google-btn {
             width: 100%;
             padding: 12px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
             border: 1px solid var(--card-border);
             border-radius: 30px;
@@ -213,14 +362,28 @@
             transition: all 0.2s;
         }
         body.light-theme .google-btn { color: #111827; background: rgba(0,0,0,0.03); }
-        .google-btn:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--text-color);
+        .google-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--text-color); }
+        .google-btn img { width: 18px; height: 18px; }
+
+        .guest-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: rgba(34, 197, 94, 0.08);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
         }
-        .google-btn img {
-            width: 18px;
-            height: 18px;
-        }
+        .guest-btn:hover { background: rgba(34, 197, 94, 0.15); box-shadow: 0 0 20px rgba(34,197,94,0.2); }
+        .guest-btn svg { width: 17px; height: 17px; }
 
         .switch-auth {
             margin-top: 20px;
@@ -231,9 +394,143 @@
             color: var(--accent-color);
             text-decoration: none;
             font-weight: 600;
+            cursor: pointer;
         }
-        .switch-auth a:hover {
-            text-decoration: underline;
+        .switch-auth a:hover { text-decoration: underline; }
+
+        /* --- ЭКРАН ПОДТВЕРЖДЕНИЯ / 2FA --- */
+        .verify-icon {
+            font-size: 52px;
+            margin-bottom: 14px;
+            animation: pulse 2s ease infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .auth-sub {
+            color: var(--card-text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+        .auth-sub strong { color: var(--accent-color); }
+
+        .code-input {
+            padding-left: 16px;
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 12px;
+            font-weight: 700;
+        }
+        .code-hint {
+            font-size: 11px;
+            color: var(--card-text-muted);
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* --- ЭКРАН СЕССИИ / ИСТОРИЯ --- */
+        .session-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .badge-active { background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+        .badge-guest { background: rgba(255, 193, 7, 0.12); color: #fbbf24; border: 1px solid rgba(255,193,7,0.3); }
+
+        .session-user {
+            color: var(--card-text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .history-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--card-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 18px 0 10px;
+            text-align: left;
+        }
+        .history-list {
+            max-height: 220px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+        }
+        .history-list::-webkit-scrollbar { width: 6px; }
+        .history-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+        .history-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            border-radius: 11px;
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+        .history-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+        .history-method { font-weight: 700; color: var(--text-color); }
+        .history-status { font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+        .st-active { background: rgba(34,197,94,0.15); color: #4ade80; }
+        .st-done { background: rgba(255,255,255,0.08); color: var(--card-text-muted); }
+        .st-guest { background: rgba(255,193,7,0.15); color: #fbbf24; }
+        .history-time { color: var(--card-text-muted); font-size: 11px; }
+        .history-device { color: var(--card-text-muted); font-size: 11px; margin-top: 2px; opacity: 0.8; }
+        .history-empty { color: var(--card-text-muted); font-size: 12px; text-align: center; padding: 15px; }
+
+        /* --- TOAST-УВЕДОМЛЕНИЯ --- */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 340px;
+        }
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a1a24;
+            border: 1px solid var(--card-border);
+            border-left: 4px solid var(--accent-color);
+            color: #fff;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.35s ease;
+            backdrop-filter: blur(10px);
+        }
+        .toast.show { opacity: 1; transform: translateX(0); }
+        .toast-success { border-left-color: #22c55e; }
+        .toast-error { border-left-color: #ef4444; }
+        .toast-warning { border-left-color: #f59e0b; }
+        .toast-info { border-left-color: #3b82f6; }
+        .toast-icon { font-size: 18px; flex-shrink: 0; }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 24px 18px; }
+            .toast-container { left: 12px; right: 12px; max-width: none; }
         }
     </style>
 </head>
@@ -245,143 +542,821 @@
             <span>Назад</span>
         </a>
 
-        <h2 id="auth-title">Вход в аккаунт</h2>
+        <!-- ===== ЭКРАН: ВХОД ===== -->
+        <div class="auth-view active" id="view-login">
+            <h2>Вход в аккаунт</h2>
 
-        <form id="auth-form" onsubmit="return false;">
-            <div class="form-group">
-                <label for="email">Электронная почта</label>
-                <input type="email" id="email" class="input-field" placeholder="example@mail.com" required>
+            <form id="login-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="login-email">Электронная почта</label>
+                    <div class="input-wrap">
+                        <i data-lucide="mail" class="field-icon"></i>
+                        <input type="email" id="login-email" class="input-field" placeholder="example@mail.com" autocomplete="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">
+                        Пароль
+                        <span class="forgot-link" id="forgot-password-link" onclick="window.resetPassword()">Забыли пароль?</span>
+                    </label>
+                    <div class="input-wrap">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="login-password" class="input-field" placeholder="••••••••" autocomplete="current-password" required>
+                        <button type="button" class="password-toggle" data-toggle-pass="login-password" aria-label="Показать пароль"><i data-lucide="eye"></i></button>
+                    </div>
+                </div>
+
+                <!-- Капча-слайдер -->
+                <div class="captcha-wrap" id="login-captcha">
+                    <div class="captcha-track">
+                        <div class="captcha-fill"></div>
+                        <div class="captcha-label"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Потяните вправо для подтверждения</div>
+                        <div class="captcha-knob"><i data-lucide="arrow-right"></i></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="login-btn" disabled>
+                    <i data-lucide="log-in"></i> Войти
+                </button>
+            </form>
+
+            <div class="divider">или</div>
+
+            <button class="google-btn" id="google-btn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                Войти через Google
+            </button>
+
+            <button class="guest-btn" id="guest-btn">
+                <i data-lucide="user-round"></i> Войти как гость
+            </button>
+
+            <div class="switch-auth">
+                Нет аккаунта? <a onclick="window.switchView('view-register')">Зарегистрироваться</a>
             </div>
-            <div class="form-group">
-                <label for="password">
-                    Пароль 
-                    <a href="#" class="forgot-link" id="forgot-password-link" onclick="window.resetPassword()">Забыли пароль?</a>
-                </label>
-                <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+        </div>
+
+        <!-- ===== ЭКРАН: РЕГИСТРАЦИЯ ===== -->
+        <div class="auth-view" id="view-register">
+            <h2>Регистрация</h2>
+
+            <form id="register-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="reg-email">Электронная почта</label>
+                    <div class="input-wrap">
+                        <i data-lucide="mail" class="field-icon"></i>
+                        <input type="email" id="reg-email" class="input-field" placeholder="example@mail.com" autocomplete="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Пароль</label>
+                    <div class="input-wrap">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="reg-password" class="input-field" placeholder="Минимум 6 символов" autocomplete="new-password" required>
+                        <button type="button" class="password-toggle" data-toggle-pass="reg-password" aria-label="Показать пароль"><i data-lucide="eye"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password2">Повторите пароль</label>
+                    <div class="input-wrap">
+                        <i data-lucide="lock" class="field-icon"></i>
+                        <input type="password" id="reg-password2" class="input-field" placeholder="••••••••" autocomplete="new-password" required>
+                        <button type="button" class="password-toggle" data-toggle-pass="reg-password2" aria-label="Показать пароль"><i data-lucide="eye"></i></button>
+                    </div>
+                </div>
+
+                <!-- Капча-слайдер -->
+                <div class="captcha-wrap" id="register-captcha">
+                    <div class="captcha-track">
+                        <div class="captcha-fill"></div>
+                        <div class="captcha-label"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> Потяните вправо для подтверждения</div>
+                        <div class="captcha-knob"><i data-lucide="arrow-right"></i></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="register-btn" disabled>
+                    <i data-lucide="user-plus"></i> Создать аккаунт
+                </button>
+            </form>
+
+            <div class="switch-auth">
+                Уже есть аккаунт? <a onclick="window.switchView('view-login')">Войти</a>
             </div>
-            <button type="submit" class="btn" id="submit-btn">Войти</button>
-        </form>
+        </div>
 
-        <div class="divider">или</div>
+        <!-- ===== ЭКРАН: ПОДТВЕРЖДЕНИЕ ПОЧТЫ (2FA этап 1) ===== -->
+        <div class="auth-view" id="view-verify">
+            <div class="verify-icon">📧</div>
+            <h2>Подтвердите почту</h2>
+            <p class="auth-sub">Мы отправили письмо с подтверждением на <strong id="verify-email">вашу почту</strong>. Пожалуйста, подтвердите её перед входом (2FA проверка).</p>
+            <button class="btn" id="verify-btn">
+                <i data-lucide="check-check"></i> Я подтвердил почту
+            </button>
+            <button class="ghost-btn" id="resend-verify-btn">
+                <i data-lucide="refresh-cw"></i> Отправить письмо ещё раз
+            </button>
+        </div>
 
-        <button class="google-btn" id="google-btn">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            Войти через Google
-        </button>
+        <!-- ===== ЭКРАН: 6-ЗНАЧНЫЙ КОД (2FA этап 2) ===== -->
+        <div class="auth-view" id="view-code">
+            <div class="verify-icon">🔐</div>
+            <h2>Код подтверждения (2FA)</h2>
+            <p class="auth-sub">Введите 6-значный код, отправленный на почту <strong id="code-email">...</strong></p>
+            <input type="text" id="code-input" class="input-field code-input" maxlength="6" placeholder="••••••" inputmode="numeric" autocomplete="one-time-code">
+            <p class="code-hint" id="code-hint"></p>
+            <button class="btn" id="code-btn">
+                <i data-lucide="shield-check"></i> Подтвердить код
+            </button>
+            <button class="ghost-btn" id="resend-code-btn">
+                <i data-lucide="refresh-cw"></i> Отправить код ещё раз
+            </button>
+        </div>
 
-        <div class="switch-auth" id="switch-box">
-            Нет аккаунта? <a href="#" id="switch-link" onclick="window.toggleAuthMode(true)">Зарегистрироваться</a>
+        <!-- ===== ЭКРАН: СЕССИЯ / ИСТОРИЯ ВХОДОВ ===== -->
+        <div class="auth-view" id="view-session">
+            <div class="session-badge badge-active" id="session-badge">🟢 Активна</div>
+            <h2 id="session-title">Вы вошли</h2>
+            <p class="session-user" id="session-user"></p>
+
+            <h3 class="history-title">📋 История входов</h3>
+            <div class="history-list" id="history-list">
+                <div class="history-empty">Загрузка...</div>
+            </div>
+
+            <button class="btn" id="continue-btn">
+                <i data-lucide="arrow-right"></i> Продолжить на сайт
+            </button>
+            <button class="ghost-btn danger" id="logout-btn">
+                <i data-lucide="log-out"></i> Выйти из аккаунта
+            </button>
         </div>
     </div>
 
+    <!-- Toast-уведомления -->
+    <div class="toast-container" id="toast-container"></div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import {
+            getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+            sendPasswordResetEmail, sendEmailVerification, signInWithPopup,
+            GoogleAuthProvider, signInAnonymously, signOut, onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import {
+            getFirestore, doc, setDoc, getDoc, updateDoc,
+            collection, query, where, orderBy, limit, getDocs, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        /* ============================================================
+           🔧 НАСТРОЙКА FIREBASE — вставьте СВОИ ключи из Firebase Console
+           (Project Settings → Your apps → Web app → Firebase SDK config)
+           ============================================================ */
         const firebaseConfig = {
-          apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
-          authDomain: "insaf-backend.firebaseapp.com",
-          projectId: "insaf-backend",
-          storageBucket: "insaf-backend.firebasestorage.app",
-          messagingSenderId: "767081007202",
-          appId: "1:767081007202:web:f511d4fd8f20b9af87e93b"
+            apiKey: "AIzaSyBkz-l4lX57yRvGiZsQ3PV53p0vMg_hJrQ",
+            authDomain: "insaf-backend.firebaseapp.com",
+            projectId: "insaf-backend",
+            storageBucket: "insaf-backend.firebasestorage.app",
+            messagingSenderId: "767081007202",
+            appId: "1:767081007202:web:f511d4fd8f20b9af87e93b"
         };
+
+        // Строгая 2FA: дополнительный 6-значный код после подтверждения почты.
+        // ВНИМАНИЕ: реальная отправка кода на почту требует Firebase Extensions
+        // или Cloud Functions. В демо-режиме код показывается в подсказке.
+        const CODE_2FA_ENABLED = false;
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let isRegisterMode = false;
-
-        document.body.classList.remove('light-theme', 'dark-theme', 'minecraft-theme', 'classic-theme');
+        /* ---------- Тема ---------- */
+        document.body.classList.remove('light-theme', 'classic-theme', 'minecraft-theme');
         const theme = localStorage.getItem('siteTheme') || 'dark';
-        if(theme !== 'dark') document.body.classList.add(theme + '-theme');
-
-        const accentColor = localStorage.getItem('accentColor') || '#ff0055';
+        if (theme !== 'dark') document.body.classList.add(theme + '-theme');
+        const accentColor = localStorage.getItem('accentColor') || '#ff4757';
         document.documentElement.style.setProperty('--accent-color', accentColor);
-        document.documentElement.style.setProperty('--glow-effect', '0 0 20px ' + accentColor + '59');
+        document.documentElement.style.setProperty('--glow-effect', '0 0 22px ' + accentColor + '59');
 
-        window.toggleAuthMode = function(toRegister) {
-            isRegisterMode = toRegister;
-            const title = document.getElementById('auth-title');
-            const submitBtn = document.getElementById('submit-btn');
-            const switchBox = document.getElementById('switch-box');
-            const forgotLink = document.getElementById('forgot-password-link');
+        /* ---------- Состояние ---------- */
+        let currentUser = null;
+        let pending2FACode = null;
+        let pending2FAUser = null;
+        let pendingVerificationEmail = '';
+        const captchaState = { login: false, register: false };
+        const captchaObjects = {};
 
-            if(isRegisterMode) {
-                title.innerText = "Регистрация";
-                submitBtn.innerText = "Создать аккаунт";
-                switchBox.innerHTML = `Уже есть аккаунт? <a href="#" onclick="window.toggleAuthMode(false)">Войти</a>`;
-                if(forgotLink) forgotLink.style.display = 'none';
-            } else {
-                title.innerText = "Вход в аккаунт";
-                submitBtn.innerText = "Войти";
-                switchBox.innerHTML = `Нет аккаунта? <a href="#" onclick="window.toggleAuthMode(true)">Зарегистрироваться</a>`;
-                if(forgotLink) forgotLink.style.display = 'inline';
+        /* ============================================================
+           TOAST-УВЕДОМЛЕНИЯ
+           ============================================================ */
+        function toast(message, type = 'info', icon) {
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = 'toast toast-' + type;
+            el.innerHTML = '<span class="toast-icon">' + (icon || icons[type] || 'ℹ️') + '</span><span>' + message + '</span>';
+            container.appendChild(el);
+            requestAnimationFrame(() => el.classList.add('show'));
+            setTimeout(() => {
+                el.classList.remove('show');
+                setTimeout(() => el.remove(), 350);
+            }, 4200);
+        }
+
+        /* ============================================================
+           КАПЧА-СЛАЙДЕР (Anti-Bot Verification)
+           ============================================================ */
+        function initCaptcha(wrapId, onStateChange) {
+            const wrap = document.getElementById(wrapId);
+            const track = wrap.querySelector('.captcha-track');
+            const knob = wrap.querySelector('.captcha-knob');
+            const label = wrap.querySelector('.captcha-label');
+            const fill = wrap.querySelector('.captcha-fill');
+            let passed = false;
+            let dragging = false;
+            let startX = 0;
+            let startOffset = 0;
+            let offset = 0;
+
+            function maxOffset() { return track.clientWidth - knob.offsetWidth; }
+            function setOffset(v) {
+                offset = Math.max(0, Math.min(v, maxOffset()));
+                knob.style.transform = 'translateX(' + offset + 'px)';
+                fill.style.width = offset + 'px';
             }
-        };
 
-        window.resetPassword = async function() {
-            const emailInput = document.getElementById('email');
-            let email = emailInput.value.trim();
-
-            if (!email) {
-                email = prompt("Введите ваш Email для сброса пароля:");
-            }
-
-            if (!email) return;
-
-            try {
-                await sendPasswordResetEmail(auth, email);
-                alert("Ссылка для сброса пароля отправлена на почту: " + email);
-            } catch (error) {
-                alert("Ошибка при отправке письма: " + error.message);
-            }
-        };
-
-        document.getElementById('auth-form').addEventListener('submit', async () => {
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
-            try {
-                if(isRegisterMode) {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    await setDoc(doc(db, "users", userCredential.user.uid), {
-                        nickname: email.split('@')[0],
-                        avatar: "https://via.placeholder.com/40"
-                    });
-                    alert("Регистрация успешна!");
+            knob.addEventListener('pointerdown', (e) => {
+                if (passed) return;
+                dragging = true;
+                startX = e.clientX;
+                startOffset = offset;
+                try { knob.setPointerCapture(e.pointerId); } catch (err) {}
+            });
+            knob.addEventListener('pointermove', (e) => {
+                if (!dragging) return;
+                setOffset(startOffset + (e.clientX - startX));
+            });
+            knob.addEventListener('pointerup', () => {
+                dragging = false;
+                if (offset >= maxOffset() - 4) {
+                    passed = true;
+                    setOffset(maxOffset());
+                    wrap.classList.add('passed');
+                    label.innerHTML = '✅ Подтверждено';
+                    onStateChange(true);
                 } else {
-                    await signInWithEmailAndPassword(auth, email, password);
+                    setOffset(0);
+                    onStateChange(false);
                 }
-                window.location.href = 'index.html';
+            });
+            knob.addEventListener('pointercancel', () => { dragging = false; setOffset(0); onStateChange(false); });
+
+            const obj = {
+                reset() {
+                    passed = false;
+                    dragging = false;
+                    setOffset(0);
+                    wrap.classList.remove('passed');
+                    label.innerHTML = '<i data-lucide="shield-check" style="width:14px;height:14px;"></i> Потяните вправо для подтверждения';
+                    if (window.lucide) lucide.createIcons();
+                    onStateChange(false);
+                }
+            };
+            captchaObjects[wrapId] = obj;
+            return obj;
+        }
+
+        function updateCaptchaButtons() {
+            const loginBtn = document.getElementById('login-btn');
+            const regBtn = document.getElementById('register-btn');
+            if (loginBtn) loginBtn.disabled = !captchaState.login;
+            if (regBtn) regBtn.disabled = !captchaState.register;
+        }
+
+        /* ============================================================
+           ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+           ============================================================ */
+        window.switchView = function(viewId) {
+            document.querySelectorAll('.auth-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            if (window.lucide) lucide.createIcons();
+            if (viewId === 'view-login' || viewId === 'view-register') {
+                // сброс капчи при возврате к формам
+                Object.values(captchaObjects).forEach(c => c.reset());
+                updateCaptchaButtons();
+            }
+            if (viewId === 'view-verify' && pendingVerificationEmail) {
+                document.getElementById('verify-email').innerText = pendingVerificationEmail;
+            }
+        };
+
+        /* ============================================================
+           ПОКАЗ/СКРЫТИЕ ПАРОЛЯ
+           ============================================================ */
+        document.querySelectorAll('.password-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.togglePass);
+                if (!input) return;
+                const isHidden = input.type === 'password';
+                input.type = isHidden ? 'text' : 'password';
+                btn.innerHTML = isHidden ? '<i data-lucide="eye-off"></i>' : '<i data-lucide="eye"></i>';
+                if (window.lucide) lucide.createIcons();
+            });
+        });
+
+        /* ============================================================
+           УТИЛИТЫ
+           ============================================================ */
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            let browser = 'Браузер';
+            if (/edg\//i.test(ua)) browser = 'Edge';
+            else if (/chrome|crios/i.test(ua)) browser = 'Chrome';
+            else if (/firefox/i.test(ua)) browser = 'Firefox';
+            else if (/safari/i.test(ua)) browser = 'Safari';
+            else if (/opr\//i.test(ua)) browser = 'Opera';
+            let os = 'ОС';
+            if (/windows/i.test(ua)) os = 'Windows';
+            else if (/android/i.test(ua)) os = 'Android';
+            else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+            else if (/mac/i.test(ua)) os = 'macOS';
+            else if (/linux/i.test(ua)) os = 'Linux';
+            return browser + ' • ' + os;
+        }
+        function formatDate(ts) {
+            try { return new Date(ts).toLocaleString('ru-RU', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+            catch (e) { return ts || ''; }
+        }
+        function methodIcon(m) {
+            return { email: '📧', google: '🔵', anonymous: '🎭' }[m] || '🔑';
+        }
+        function generateCode() {
+            return String(Math.floor(100000 + Math.random() * 900000));
+        }
+        // Локальный гостевой пользователь (фолбэк, если анонимный вход отключён в Firebase)
+        function createLocalGuest() {
+            const guest = {
+                uid: 'local_guest_' + Date.now(),
+                email: null,
+                displayName: 'Гость',
+                isAnonymous: true,
+                isLocalGuest: true
+            };
+            localStorage.setItem('guestSession', JSON.stringify(guest));
+            return guest;
+        }
+        function handleAuthError(error) {
+            const map = {
+                'auth/email-already-in-use': ['Этот Email уже зарегистрирован', 'error'],
+                'auth/invalid-email': ['Некорректный Email', 'error'],
+                'auth/weak-password': ['Пароль слишком слабый (минимум 6 символов)', 'warning'],
+                'auth/user-not-found': ['Аккаунт не найден', 'error'],
+                'auth/wrong-password': ['Неверный пароль', 'error'],
+                'auth/invalid-credential': ['Неверный Email или пароль', 'error'],
+                'auth/too-many-requests': ['Слишком много попыток. Подождите немного', 'warning'],
+                'auth/network-request-failed': ['Сбой сети. Проверьте соединение', 'warning'],
+                'auth/popup-closed-by-user': ['Вход отменён', 'info'],
+                'auth/admin-restricted-operation': ['Анонимный вход отключён в Firebase Console', 'warning']
+            };
+            const [msg, type] = map[error.code] || [error.message || 'Произошла ошибка', 'error'];
+            toast(msg, type);
+        }
+
+        /* ============================================================
+           ИСТОРИЯ СЕССИЙ (Firestore + localStorage fallback)
+           ============================================================ */
+        async function recordSession(user, method) {
+            const data = {
+                uid: user.uid,
+                email: user.email || (user.isAnonymous ? 'guest@anonymous' : ''),
+                displayName: user.displayName || (user.isAnonymous ? 'Гость' : (user.email ? user.email.split('@')[0] : 'Пользователь')),
+                method: method,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                device: getDeviceInfo(),
+                status: user.isAnonymous ? 'Гость' : 'Активна'
+            };
+            // Локальный гость — только localStorage (Firebase-аноним недоступен)
+            if (user.isLocalGuest) {
+                const key = 'sessions_' + user.uid;
+                const local = JSON.parse(localStorage.getItem(key) || '[]');
+                local.unshift(data);
+                localStorage.setItem(key, JSON.stringify(local.slice(0, 20)));
+                localStorage.setItem('lastSessionId', 'local');
+                return 'local';
+            }
+            // 1) Firestore
+            try {
+                const sessionId = user.uid + '_' + Date.now();
+                await setDoc(doc(db, 'sessions', sessionId), data);
+                localStorage.setItem('lastSessionId', sessionId);
+                return sessionId;
+            } catch (e) {
+                // 2) localStorage fallback
+                const key = 'sessions_' + user.uid;
+                const local = JSON.parse(localStorage.getItem(key) || '[]');
+                local.unshift(data);
+                localStorage.setItem(key, JSON.stringify(local.slice(0, 20)));
+                localStorage.setItem('lastSessionId', 'local');
+                return 'local';
+            }
+        }
+
+        async function loadHistory(uid) {
+            // Локальный гость — только localStorage
+            if (uid && uid.startsWith('local_guest_')) {
+                return JSON.parse(localStorage.getItem('sessions_' + uid) || '[]');
+            }
+            try {
+                const q = query(collection(db, 'sessions'), where('uid', '==', uid), orderBy('timestamp', 'desc'), limit(10));
+                const snap = await getDocs(q);
+                return snap.docs.map(d => d.data());
+            } catch (e) {
+                return JSON.parse(localStorage.getItem('sessions_' + uid) || '[]');
+            }
+        }
+
+        async function endSession(user) {
+            // Локальный гость
+            if (user && user.isLocalGuest) {
+                const key = 'sessions_' + user.uid;
+                const local = JSON.parse(localStorage.getItem(key) || '[]');
+                if (local.length) {
+                    local[0].status = 'Завершена';
+                    localStorage.setItem(key, JSON.stringify(local));
+                }
+                localStorage.removeItem('guestSession');
+                return;
+            }
+            const lastId = localStorage.getItem('lastSessionId');
+            if (lastId && lastId !== 'local') {
+                try {
+                    await updateDoc(doc(db, 'sessions', lastId), { status: 'Завершена', endedAt: new Date().toISOString() });
+                    return;
+                } catch (e) {}
+            }
+            const key = 'sessions_' + user.uid;
+            const local = JSON.parse(localStorage.getItem(key) || '[]');
+            if (local.length) {
+                local[0].status = 'Завершена';
+                localStorage.setItem(key, JSON.stringify(local));
+            }
+        }
+
+        /* ============================================================
+           ЭКРАН СЕССИИ
+           ============================================================ */
+        async function renderSessionView(user, method) {
+            document.getElementById('session-user').innerText = user.email || (user.isAnonymous ? 'Гость (ограниченные права)' : '');
+            document.getElementById('session-title').innerText = user.isAnonymous ? 'Вы вошли как Гость' : 'Вы вошли';
+
+            const badge = document.getElementById('session-badge');
+            if (user.isAnonymous) {
+                badge.className = 'session-badge badge-guest';
+                badge.textContent = '🎭 Гость';
+            } else {
+                badge.className = 'session-badge badge-active';
+                badge.textContent = '🟢 Активна';
+            }
+
+            const list = document.getElementById('history-list');
+            const sessions = await loadHistory(user.uid);
+            if (!sessions.length) {
+                list.innerHTML = '<div class="history-empty">Пока нет записей о входах</div>';
+                return;
+            }
+            list.innerHTML = sessions.map(s => {
+                const stClass = s.status === 'Завершена' ? 'st-done' : (s.status === 'Гость' ? 'st-guest' : 'st-active');
+                return '<div class="history-item">' +
+                    '<div class="history-top"><span class="history-method">' + methodIcon(s.method) + ' ' + (s.displayName || s.email || '') + '</span>' +
+                    '<span class="history-status ' + stClass + '">' + s.status + '</span></div>' +
+                    '<div class="history-time">' + formatDate(s.timestamp) + '</div>' +
+                    '<div class="history-device">' + (s.device || '') + '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        /* ============================================================
+           ЗАВЕРШЕНИЕ ВХОДА
+           ============================================================ */
+        async function completeLogin(user, method) {
+            currentUser = user;
+            await recordSession(user, method);
+            await renderSessionView(user, method);
+            window.switchView('view-session');
+        }
+
+        function startCode2FA(user) {
+            pending2FAUser = user;
+            pending2FACode = generateCode();
+            document.getElementById('code-email').innerText = user.email || '';
+            document.getElementById('code-input').value = '';
+            document.getElementById('code-hint').innerText = '';
+            // Демо-подсказка (в реальном проекте код уходит на почту через Extensions/CF)
+            if (CODE_2FA_ENABLED) {
+                document.getElementById('code-hint').innerText = 'Демо-режим: ваш код — ' + pending2FACode;
+                toast('📧 Код 2FA отправлен на ' + (user.email || 'почту') + ' (демо: ' + pending2FACode + ')', 'info');
+            }
+            window.switchView('view-code');
+        }
+
+        /* ============================================================
+           ВХОД ПО EMAIL/ПАРОЛЮ + ПРОВЕРКА 2FA (emailVerified)
+           ============================================================ */
+        document.getElementById('login-form').addEventListener('submit', async () => {
+            if (!captchaState.login) { toast('Пройдите проверку «Я не робот»', 'warning'); return; }
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('login-btn');
+            btn.disabled = true;
+            btn.classList.add('loading');
+
+            try {
+                const cred = await signInWithEmailAndPassword(auth, email, password);
+                const user = cred.user;
+                await user.reload();
+
+                // 2FA этап 1: почта должна быть подтверждена
+                if (!user.emailVerified) {
+                    pendingVerificationEmail = user.email;
+                    try { await sendEmailVerification(user); } catch (e) {}
+                    window.switchView('view-verify');
+                    toast('⚠️ Требуется подтверждение почты (2FA)! Проверьте входящие', 'warning');
+                    return;
+                }
+
+                // 2FA этап 2 (опционально): 6-значный код
+                if (CODE_2FA_ENABLED) {
+                    startCode2FA(user);
+                    return;
+                }
+
+                await completeLogin(user, 'email');
             } catch (error) {
-                alert("Ошибка: " + error.message);
+                handleAuthError(error);
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = !captchaState.login;
             }
         });
 
+        /* ============================================================
+           РЕГИСТРАЦИЯ + ВЕРИФИКАЦИЯ ПОЧТЫ
+           ============================================================ */
+        document.getElementById('register-form').addEventListener('submit', async () => {
+            if (!captchaState.register) { toast('Пройдите проверку «Я не робот»', 'warning'); return; }
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const password2 = document.getElementById('reg-password2').value;
+            const btn = document.getElementById('register-btn');
+
+            if (password !== password2) { toast('Пароли не совпадают', 'error'); return; }
+            if (password.length < 6) { toast('Пароль должен быть не короче 6 символов', 'warning'); return; }
+
+            btn.disabled = true;
+            btn.classList.add('loading');
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                const user = cred.user;
+
+                // Отправка письма с подтверждением
+                try {
+                    await sendEmailVerification(user);
+                } catch (e) {
+                    console.warn('Не удалось отправить письмо верификации:', e);
+                }
+
+                // Профиль пользователя в Firestore
+                try {
+                    await setDoc(doc(db, 'users', user.uid), {
+                        nickname: email.split('@')[0],
+                        email: email,
+                        avatar: 'https://via.placeholder.com/40',
+                        createdAt: serverTimestamp()
+                    }, { merge: true });
+                } catch (e) {
+                    console.warn('Firestore недоступен, профиль сохранён локально:', e);
+                    localStorage.setItem('pendingUserProfile_' + user.uid, JSON.stringify({
+                        nickname: email.split('@')[0], email: email, avatar: 'https://via.placeholder.com/40'
+                    }));
+                }
+
+                pendingVerificationEmail = email;
+                window.switchView('view-verify');
+                toast('📧 Письмо с подтверждением отправлено на вашу почту. Пожалуйста, подтвердите её перед входом (2FA проверка)', 'success');
+            } catch (error) {
+                handleAuthError(error);
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = !captchaState.register;
+            }
+        });
+
+        /* ============================================================
+           «Я ПОДТВЕРДИЛ ПОЧТУ» — user.reload() + проверка emailVerified
+           ============================================================ */
+        document.getElementById('verify-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('verify-btn');
+            const user = auth.currentUser;
+            if (!user) {
+                toast('Сначала войдите в аккаунт', 'error');
+                window.switchView('view-login');
+                return;
+            }
+            btn.disabled = true;
+            btn.classList.add('loading');
+            try {
+                await user.reload();
+                if (user.emailVerified) {
+                    toast('✅ Почта подтверждена!', 'success');
+                    if (CODE_2FA_ENABLED) {
+                        startCode2FA(user);
+                    } else {
+                        await completeLogin(user, 'email');
+                    }
+                } else {
+                    toast('📭 Почта ещё не подтверждена. Проверьте входящие и спам', 'warning');
+                }
+            } catch (error) {
+                handleAuthError(error);
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('resend-verify-btn').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user) { toast('Сначала войдите в аккаунт', 'error'); return; }
+            try {
+                await sendEmailVerification(user);
+                toast('📧 Письмо с подтверждением отправлено повторно', 'info');
+            } catch (error) {
+                handleAuthError(error);
+            }
+        });
+
+        /* ============================================================
+           6-ЗНАЧНЫЙ КОД (2FA этап 2)
+           ============================================================ */
+        document.getElementById('code-btn').addEventListener('click', () => {
+            const input = document.getElementById('code-input').value.trim();
+            if (input.length !== 6) { toast('Введите 6-значный код', 'warning'); return; }
+            if (input === pending2FACode) {
+                toast('✅ Код верный. Вход подтверждён!', 'success');
+                const user = pending2FAUser;
+                pending2FACode = null;
+                pending2FAUser = null;
+                completeLogin(user, 'email');
+            } else {
+                toast('❌ Неверный код. Попробуйте ещё раз', 'error');
+            }
+        });
+
+        document.getElementById('resend-code-btn').addEventListener('click', () => {
+            if (!pending2FAUser) { toast('Нет активной сессии 2FA', 'error'); return; }
+            pending2FACode = generateCode();
+            document.getElementById('code-hint').innerText = CODE_2FA_ENABLED ? 'Демо-режим: ваш код — ' + pending2FACode : '';
+            toast('📧 Новый код отправлен на ' + (pending2FAUser.email || 'почту') + (CODE_2FA_ENABLED ? ' (демо: ' + pending2FACode + ')' : ''), 'info');
+        });
+
+        document.getElementById('code-input').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+        });
+
+        /* ============================================================
+           ГОСТЬ (signInAnonymously)
+           ============================================================ */
+        document.getElementById('guest-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('guest-btn');
+            btn.disabled = true;
+            try {
+                const cred = await signInAnonymously(auth);
+                toast('🎭 Вы вошли как гость с ограниченными правами', 'info');
+                await completeLogin(cred.user, 'anonymous');
+            } catch (error) {
+                // Если анонимный вход отключён в Firebase Console — используем локального гостя
+                if (error.code === 'auth/admin-restricted-operation') {
+                    toast('🎭 Анонимный вход недоступен — использован локальный гостевой режим', 'warning');
+                    const guest = createLocalGuest();
+                    await completeLogin(guest, 'anonymous');
+                } else {
+                    handleAuthError(error);
+                }
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        /* ============================================================
+           GOOGLE
+           ============================================================ */
         document.getElementById('google-btn').addEventListener('click', async () => {
             const provider = new GoogleAuthProvider();
+            const btn = document.getElementById('google-btn');
+            btn.disabled = true;
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-
-                const userDocRef = doc(db, "users", user.uid);
+                const userDocRef = doc(db, 'users', user.uid);
                 const userDoc = await getDoc(userDocRef);
-                
                 if (!userDoc.exists()) {
-                    await setDoc(userDocRef, {
-                        nickname: user.displayName || "Пользователь",
-                        avatar: user.photoURL || "https://via.placeholder.com/40"
-                    });
+                    try {
+                        await setDoc(userDocRef, {
+                            nickname: user.displayName || 'Пользователь',
+                            email: user.email || '',
+                            avatar: user.photoURL || 'https://via.placeholder.com/40',
+                            createdAt: serverTimestamp()
+                        });
+                    } catch (e) {
+                        console.warn('Firestore недоступен:', e);
+                    }
                 }
-
-                window.location.href = 'index.html';
+                if (CODE_2FA_ENABLED) {
+                    startCode2FA(user);
+                } else {
+                    await completeLogin(user, 'google');
+                }
             } catch (error) {
-                alert("Ошибка входа через Google: " + error.message);
+                handleAuthError(error);
+            } finally {
+                btn.disabled = false;
             }
         });
+
+        /* ============================================================
+           ВЫХОД (signOut) + статус сессии «Завершена»
+           ============================================================ */
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('logout-btn');
+            btn.disabled = true;
+            try {
+                if (currentUser) await endSession(currentUser);
+                await signOut(auth);
+                currentUser = null;
+                toast('Вы вышли из аккаунта', 'info');
+                window.switchView('view-login');
+            } catch (error) {
+                handleAuthError(error);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('continue-btn').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        /* ============================================================
+           СБРОС ПАРОЛЯ
+           ============================================================ */
+        window.resetPassword = async function() {
+            let email = document.getElementById('login-email').value.trim();
+            if (!email) email = prompt('Введите ваш Email для сброса пароля:');
+            if (!email) return;
+            try {
+                await sendPasswordResetEmail(auth, email);
+                toast('📧 Ссылка для сброса пароля отправлена на ' + email, 'success');
+            } catch (error) {
+                handleAuthError(error);
+            }
+        };
+
+        /* ============================================================
+           АВТОРИЗАЦИОННОЕ СОСТОЯНИЕ
+           ============================================================ */
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Пользователь уже авторизован через Firebase
+                if (user.emailVerified || user.isAnonymous) {
+                    currentUser = user;
+                    await renderSessionView(user, user.isAnonymous ? 'anonymous' : 'email');
+                    window.switchView('view-session');
+                } else {
+                    pendingVerificationEmail = user.email || '';
+                    window.switchView('view-verify');
+                }
+            } else {
+                // Проверяем локальную гостевую сессию (фолбэк для отключённого анонимного входа в Firebase)
+                const savedGuest = localStorage.getItem('guestSession');
+                if (savedGuest) {
+                    try {
+                        currentUser = JSON.parse(savedGuest);
+                        await renderSessionView(currentUser, 'anonymous');
+                        window.switchView('view-session');
+                        return;
+                    } catch (e) {}
+                }
+                currentUser = null;
+                window.switchView('view-login');
+            }
+        });
+
+        /* ---------- Инициализация ---------- */
+        initCaptcha('login-captcha', (passed) => { captchaState.login = passed; updateCaptchaButtons(); });
+        initCaptcha('register-captcha', (passed) => { captchaState.register = passed; updateCaptchaButtons(); });
+        updateCaptchaButtons();
+        if (window.lucide) lucide.createIcons();
     </script>
 </body>
 </html>

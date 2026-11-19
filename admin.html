@@ -20,7 +20,7 @@
             --accent-color: #ff0055;
             --glow-effect: 0 0 20px rgba(255, 0, 85, 0.35);
             --glass-blur: blur(12px);
-            --site-font: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            --site-font: 'Arial Black', 'Segoe UI', sans-serif;
             --border-radius-base: 16px;
             --border-radius-round: 30px;
         }
@@ -65,6 +65,11 @@
         body.light-theme .admin-label { color: #111827 !important; }
         body.light-theme .admin-input, body.light-theme .admin-select, body.light-theme .admin-textarea { background: #fff; color: #111827; }
         body.light-theme .item-card { background: #fff; }
+        body.light-theme .admin-submit-btn { color: #fff; }
+        body.light-theme .btn-cancel { color: #111827; background: rgba(0,0,0,0.05); }
+        body.light-theme .btn-control { color: #fff; }
+        body.light-theme .stats-input { background: #fff; color: #111827; border-color: #ccc; }
+        body.light-theme .btn-apply-stats { color: #fff; }
 
         /* --- МАЙНКРАФТ ТЕМА --- */
         body.minecraft-theme {
@@ -133,8 +138,48 @@
         .btn-del { background: #dc2626; } .btn-del:hover { background: #ef4444; box-shadow: 0 0 10px rgba(239,68,68,0.4); }
         .btn-role-admin { background: #16a34a; } .btn-role-admin:hover { background: #22c55e; box-shadow: 0 0 10px rgba(34,197,94,0.4); }
         .btn-role-user { background: #d97706; } .btn-role-user:hover { background: #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.4); }
+        .btn-stats-toggle { background: #7c3aed; } .btn-stats-toggle:hover { background: #8b5cf6; box-shadow: 0 0 10px rgba(124,58,237,0.5); }
 
         footer { text-align: center; padding: 20px; font-size: 12px; color: var(--card-text-muted); border-top: 1px solid var(--card-border); background: rgba(4,4,6,0.3); width: 100%; }
+
+        /* === ЗАЩИТА ОТ DDOS / АБУЗА === */
+        .lockout-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.85); backdrop-filter: blur(8px); z-index: 99999; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+        .lockout-overlay.active { display: flex; }
+        .lockout-box { background: var(--modal-bg); border: 2px solid #dc2626; border-radius: var(--border-radius-base); padding: 30px 40px; text-align: center; max-width: 380px; }
+        .lockout-box h2 { color: #ef4444; margin-bottom: 10px; font-size: 18px; }
+        .lockout-box p { color: var(--card-text-muted); font-size: 13px; line-height: 1.5; }
+        .lockout-timer { font-size: 36px; font-weight: 800; color: #ef4444; margin-top: 10px; }
+
+        /* === ПАНЕЛЬ СТАТИСТИКИ ВИДЕО === */
+        .stats-editor { display: none; flex-direction: column; gap: 8px; padding: 14px; margin-top: 10px; background: rgba(255,0,85,0.06); border: 1px solid rgba(255,0,85,0.25); border-radius: var(--border-radius-base); }
+        .stats-editor.open { display: flex; }
+        .stats-row { display: flex; align-items: center; gap: 8px; }
+        .stats-label { font-size: 12px; color: var(--card-text-muted); min-width: 70px; }
+        .stats-input { width: 90px; padding: 6px 10px; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); border-radius: 8px; color: #fff; font-size: 13px; font-weight: 700; outline: none; }
+        .stats-input:focus { border-color: var(--accent-color); }
+        .btn-apply-stats { background: var(--accent-color); color: #fff; border: none; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; margin-left: auto; }
+        .btn-apply-stats:hover { opacity: .85; }
+
+        /* === ANTI-CHEAT / АНТИ-НАКРУТКА === */
+        .anticheat-panel { background: rgba(124,58,237,0.07); border: 1px solid rgba(124,58,237,0.3); border-radius: var(--border-radius-base); padding: 14px; margin-top: 12px; }
+        .anticheat-title { font-size: 14px; font-weight: 700; color: #a78bfa; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .anticheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+        .ah-stat { background: rgba(0,0,0,0.25); border-radius: 10px; padding: 10px 12px; text-align: center; }
+        .ah-stat-val { font-size: 22px; font-weight: 800; line-height: 1; }
+        .ah-stat-label { font-size: 10px; color: var(--card-text-muted); margin-top: 4px; }
+        .ah-stat-val.green { color: #4ade80; } .ah-stat-val.red { color: #f87171; } .ah-stat-val.yellow { color: #facc15; } .ah-stat-val.blue { color: #60a5fa; }
+        .ah-badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+        .ah-badge.safe { background: rgba(34,197,94,0.15); color: #4ade80; } .ah-badge.warn { background: rgba(234,179,8,0.15); color: #facc15; } .ah-badge.danger { background: rgba(239,68,68,0.15); color: #f87171; animation: secPulse 1s infinite; }
+        @keyframes secPulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+        .anticheat-log { max-height: 120px; overflow-y: auto; margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+        .ac-log-entry { font-size: 11px; padding: 4px 8px; background: rgba(0,0,0,0.2); border-radius: 6px; display: flex; justify-content: space-between; }
+        .ac-log-entry.reject { color: #f87171; } .ac-log-entry.verify { color: #4ade80; }
+        .btn-refresh-ac { background: rgba(124,58,237,0.3); color: #c4b5fd; border: 1px solid rgba(124,58,237,0.5); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .btn-refresh-ac:hover { background: rgba(124,58,237,0.5); }
+        body.light-theme .anticheat-panel { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.2); }
+        body.light-theme .ah-stat { background: rgba(0,0,0,0.04); }
+        body.light-theme .ac-log-entry { background: rgba(0,0,0,0.05); }
+        body.light-theme .btn-refresh-ac { background: rgba(124,58,237,0.1); color: #7c3aed; border-color: rgba(124,58,237,0.3); }
     </style>
 </head>
 <body>
@@ -146,6 +191,15 @@
         </div>
         <a href="index.html" class="back-btn">⬅ На сайт</a>
     </header>
+
+    <!-- Оверлей блокировки при атаке -->
+    <div class="lockout-overlay" id="lockout-overlay">
+        <div class="lockout-box">
+            <h2>⛔ Доступ временно заблокирован</h2>
+            <p>Обнаружена подозрительная активность.<br>Попробуйте позже.</p>
+            <div class="lockout-timer" id="lockout-timer">30</div>
+        </div>
+    </div>
 
     <div class="admin-container">
         <div class="lock-card" id="auth-lock-screen">
@@ -177,19 +231,6 @@
                     <button class="admin-submit-btn" id="maint-off-btn" style="margin-top: 0; background: #16a34a;">🟢 Выключить тех. работы</button>
                 </div>
             </div>
-
-            <div class="section-divider" data-text="Управление марафоном"></div>
-
-            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--accent-color); display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-calendar-alt"></i> Календарь дней марафона (15:00 МСК)
-            </h3>
-            <p style="font-size: 12px; color: var(--card-text-muted); margin-bottom: 15px;">Настройка времени релиза и прямых ссылок на видео для каждого дня марафона.</p>
-            
-            <div id="admin-marathon-editor-container" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
-                <div style="text-align: center; color: var(--card-text-muted);">Загрузка дней марафона...</div>
-            </div>
-
-            <button class="admin-submit-btn" id="save-marathon-btn">💾 Сохранить изменения марафона</button>
 
             <div class="section-divider" data-text="Управление уведомлениями"></div>
 
@@ -276,6 +317,17 @@
                 <input type="text" id="video-src" class="admin-input" value="Инсаф Студио">
             </div>
 
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label class="admin-label">👁️ Просмотры:</label>
+                    <input type="number" id="video-views" class="admin-input" placeholder="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="admin-label">❤️ Лайки:</label>
+                    <input type="number" id="video-likes" class="admin-input" placeholder="0" min="0">
+                </div>
+            </div>
+
             <button class="admin-submit-btn" id="publish-btn">🚀 Опубликовать на сайт</button>
             <button class="admin-submit-btn btn-cancel" id="cancel-video-edit-btn">❌ Отменить редактирование</button>
 
@@ -307,6 +359,21 @@
         <div class="admin-card" id="manage-videos-card">
             <h3 style="font-size: 16px; margin-bottom: 10px;">📝 Управление созданными видео</h3>
             <div class="list-container" id="admin-videos-list">Загрузка видео...</div>
+            <!-- === ПАНЕЛЬ АНТИ-ЧИТА === -->
+            <div class="anticheat-panel" id="anti-cheat-panel">
+                <div class="anticheat-title">🛡️ Анти-накрутка — Статистика</div>
+                <div class="anticheat-grid" id="ac-stats-grid">
+                    <div class="ah-stat"><div class="ah-stat-val blue" id="ac-total-events">—</div><div class="ah-stat-label">Всего событий</div></div>
+                    <div class="ah-stat"><div class="ah-stat-val green" id="ac-verified">—</div><div class="ah-stat-label">✅ Подтверждено</div></div>
+                    <div class="ah-stat"><div class="ah-stat-val red" id="ac-rejected">—</div><div class="ah-stat-label">🚫 Отклонено</div></div>
+                    <div class="ah-stat"><div class="ah-stat-val yellow" id="ac-rate">—</div><div class="ah-stat-label">💯 Честность %</div></div>
+                </div>
+                <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
+                    <span id="ac-status-badge" class="ah-badge safe">Загрузка...</span>
+                    <button class="btn-refresh-ac" onclick="window.refreshAntiCheat()">🔄 Обновить</button>
+                </div>
+                <div class="anticheat-log" id="ac-log"></div>
+            </div>
         </div>
 
         <div class="admin-card" id="manage-cats-card">
@@ -355,7 +422,6 @@
         let loadedVideos = {};
         let loadedCats = {};
         let loadedUsers = {};
-        let currentMarathonDays = [];
 
         async function checkAdminRole(user) {
             const statusMessage = document.getElementById('auth-status-message');
@@ -370,7 +436,6 @@
                     showWorkspace();
                     loadAdminData();
                     initMaintenanceListener();
-                    loadMarathonAdminEditor();
                 } else {
                     lockIcon.innerHTML = "⛔";
                     statusMessage.style.color = "#dc2626";
@@ -401,19 +466,84 @@
             const email = document.getElementById('admin-email').value.trim();
             const password = document.getElementById('admin-password').value;
             const btn = document.getElementById('btn-login-submit');
+            const statusMessage = document.getElementById('auth-status-message');
+            const lockIcon = document.getElementById('lock-icon-status');
 
             if (!email || !password) return alert("Введите Email и Пароль!");
 
+            // === DDOS / BRUTE-FORCE ЗАЩИТА ===
+            const now = Date.now();
+            _loginAttempts.push({ t: now });
+            _loginAttempts = _loginAttempts.filter(a => now - a.t < 60000); // только за последние 60 сек
+            _totalLoginAttempts++;
+
+            if (_loginAttempts.length >= 5) {
+                const remaining = Math.ceil((90000 - (now - _loginAttempts[0].t)) / 1000);
+                lockout(remaining, "Слишком много попыток входа за 60 сек.");
+                return;
+            }
+
             try {
                 btn.disabled = true;
-                btn.innerText = "Вход...";
+                btn.innerText = "Проверка...";
+                statusMessage.style.color = "#facc15";
+                statusMessage.innerText = "⏳ Проверка подлинности...";
                 await signInWithEmailAndPassword(auth, email, password);
+                _totalLoginAttempts = 0;
+                _loginAttempts = [];
             } catch (error) {
                 console.error(error);
-                alert("❌ Неверный логин или пароль.");
+                const remainingFail = 5 - _loginAttempts.length;
+                if (remainingFail <= 1) {
+                    statusMessage.style.color = "#ef4444";
+                    statusMessage.innerText = "⚠️ Осталась 1 попытка! Сломался злоумышленник?";
+                } else {
+                    statusMessage.style.color = "#facc15";
+                    statusMessage.innerText = `❌ Неверно. Осталось попыток: ${remainingFail}`;
+                }
                 btn.disabled = false;
                 btn.innerText = "Войти в панель";
             }
+        };
+
+        // --- Система защиты ---
+        const _loginAttempts = [];
+        let _totalLoginAttempts = 0;
+        let _lockoutUntil = 0;
+
+        function lockout(seconds, reason) {
+            _lockoutUntil = Date.now() + seconds * 1000;
+            const overlay = document.getElementById('lockout-overlay');
+            if (overlay) overlay.classList.add('active');
+            const timerEl = document.getElementById('lockout-timer');
+            const interval = setInterval(() => {
+                const left = Math.ceil((_lockoutUntil - Date.now()) / 1000);
+                if (left <= 0 || !_lockoutUntil) { clearInterval(interval); return; }
+                if (timerEl) timerEl.textContent = left;
+            }, 500);
+            setTimeout(() => {
+                overlay && overlay.classList.remove('active');
+                _lockoutUntil = 0;
+                if (timerEl) timerEl.textContent = '0';
+            }, seconds * 1000);
+        }
+
+        // Проверка блокировки при каждой загрузке страницы
+        (function checkLockoutOnLoad() {
+            const stored = sessionStorage.getItem('_ddos_lockout');
+            if (stored) {
+                const data = JSON.parse(stored);
+                const remaining = Math.ceil((data.until - Date.now()) / 1000);
+                if (remaining > 0) lockout(remaining, 'Повторная блокировка по сессии');
+                else sessionStorage.removeItem('_ddos_lockout');
+            }
+        })();
+
+        // Сохраняем состояние блокировки в сессию
+        const origLockout = lockout;
+        lockout = function(seconds, reason) {
+            sessionStorage.setItem('_ddos_lockout', JSON.stringify({ until: Date.now() + seconds * 1000 }));
+            origLockout(seconds, reason);
         };
 
         function showWorkspace() {
@@ -422,98 +552,9 @@
             document.getElementById('manage-users-card').style.display = 'block';
             document.getElementById('manage-videos-card').style.display = 'block';
             document.getElementById('manage-cats-card').style.display = 'block';
+            _acDataLoaded = true;
+            window.refreshAntiCheat();
         }
-
-        // --- УПРАВЛЕНИЕ КАЛЕНДАРЕМ МАРАФОНА (15:00 МСК по умолчанию) ---
-        async function loadMarathonAdminEditor() {
-            const container = document.getElementById('admin-marathon-editor-container');
-            if (!container) return;
-
-            try {
-                const docRef = doc(db, "settings", "marathon");
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists() && docSnap.data().days) {
-                    currentMarathonDays = docSnap.data().days;
-                } else {
-                    currentMarathonDays = [
-                        { day: 1, dateStr: "10 ноя", title: "Премьера #1", releaseTime: "2026-11-10T15:00:00+03:00", videoUrl: "" },
-                        { day: 2, dateStr: "11 ноя", title: "Видео #2", releaseTime: "2026-11-11T15:00:00+03:00", videoUrl: "" },
-                        { day: 3, dateStr: "12 ноя", title: "Видео #3", releaseTime: "2026-11-12T15:00:00+03:00", videoUrl: "" },
-                        { day: 4, dateStr: "13 ноя", title: "Видео #4", releaseTime: "2026-11-13T15:00:00+03:00", videoUrl: "" },
-                        { day: 5, dateStr: "14 ноя", title: "Видео #5", releaseTime: "2026-11-14T15:00:00+03:00", videoUrl: "" },
-                        { day: 6, dateStr: "15 ноя", title: "Видео #6", releaseTime: "2026-11-15T15:00:00+03:00", videoUrl: "" },
-                        { day: 7, dateStr: "16 ноя", title: "Финал марафона", releaseTime: "2026-11-16T15:00:00+03:00", videoUrl: "" }
-                    ];
-                }
-
-                renderMarathonEditorForm();
-            } catch (err) {
-                console.error("Ошибка загрузки настроек марафона:", err);
-            }
-        }
-
-        function renderMarathonEditorForm() {
-            const container = document.getElementById('admin-marathon-editor-container');
-            container.innerHTML = "";
-
-            currentMarathonDays.forEach((item, index) => {
-                const hasUrl = item.videoUrl && item.videoUrl.trim() !== "";
-                const card = document.createElement('div');
-                card.style.cssText = "background: rgba(0,0,0,0.25); border: 1px solid var(--card-border); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;";
-                card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:13px; color:var(--accent-color);">
-                        <span>День ${item.day} ${hasUrl ? '🔗 (Ссылка добавлена)' : '⏳ (Ссылка пуста)'}</span>
-                        <input type="text" id="m-date-${index}" value="${item.dateStr || ''}" placeholder="10 ноя" style="width: 80px; padding: 4px 8px; background: rgba(0,0,0,0.3); border:1px solid var(--card-border); border-radius:6px; color:#fff; font-size:12px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label class="admin-label" style="font-size:11px;">Название видео:</label>
-                        <input type="text" id="m-title-${index}" value="${item.title || ''}" class="admin-input" style="padding: 8px 12px; font-size:12px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label class="admin-label" style="font-size:11px;">Дата и время релиза (15:00 МСК):</label>
-                        <input type="text" id="m-time-${index}" value="${item.releaseTime || ''}" class="admin-input" style="padding: 8px 12px; font-size:12px;" placeholder="2026-11-10T15:00:00+03:00">
-                    </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label class="admin-label" style="font-size:11px;">Прямая ссылка на .mp4 / поток:</label>
-                        <input type="text" id="m-url-${index}" value="${item.videoUrl || ''}" class="admin-input" style="padding: 8px 12px; font-size:12px;" placeholder="https://files.catbox.moe/xxxx.mp4">
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        document.getElementById('save-marathon-btn').onclick = async function() {
-            try {
-                this.disabled = true;
-                this.innerText = "Сохранение...";
-
-                const updatedDays = currentMarathonDays.map((item, index) => {
-                    return {
-                        day: item.day,
-                        dateStr: document.getElementById(`m-date-${index}`).value.trim(),
-                        title: document.getElementById(`m-title-${index}`).value.trim(),
-                        releaseTime: document.getElementById(`m-time-${index}`).value.trim(),
-                        videoUrl: document.getElementById(`m-url-${index}`).value.trim()
-                    };
-                });
-
-                await setDoc(doc(db, "settings", "marathon"), {
-                    days: updatedDays,
-                    updatedAt: new Date().toISOString()
-                });
-
-                alert("🎉 Календарь марафона успешно обновлен на сайте!");
-                currentMarathonDays = updatedDays;
-                renderMarathonEditorForm();
-            } catch (err) {
-                console.error(err);
-                alert("❌ Ошибка при сохранении марафона.");
-            } finally {
-                this.disabled = false;
-                this.innerText = "💾 Сохранить изменения марафона";
-            }
-        };
 
         function initMaintenanceListener() {
             const statusText = document.getElementById('maintenance-status-text');
@@ -620,22 +661,63 @@
                     document.getElementById(`btn-del-cat-${doc.id}`).onclick = () => window.deleteAdminItem('playlists', doc.id);
                 });
 
-                const videoSnapshot = await getDocs(collection(db, "videos"));
+                 const videoSnapshot = await getDocs(collection(db, "videos"));
+                const statsSnapshots = await getDocs(collection(db, "stats"));
+                const statsMap = {};
+                statsSnapshots.forEach(d => { statsMap[d.id] = d.data(); });
+
+                // Сначала сохраняем данные видео в loadedVideos (иначе предзагрузка лайков падает)
                 videoSnapshot.forEach((doc) => {
                     const data = doc.data();
+                    data._stats = statsMap[doc.id] || {};
                     loadedVideos[doc.id] = data;
+                });
 
+                // Предзагружаем счётчик лайков комментариев для каждого видео
+                const commentLikePromises = [];
+                videoSnapshot.forEach((doc) => {
+                    commentLikePromises.push(
+                        getDocs(collection(db, "stats", doc.id, "comments"))
+                            .then(snap => {
+                                let total = 0;
+                                snap.forEach(d => { total += (d.data().likesCount || 0); });
+                                loadedVideos[doc.id]._totalCommentLikes = total;
+                            })
+                            .catch(() => { loadedVideos[doc.id]._totalCommentLikes = 0; })
+                    );
+                });
+                await Promise.all(commentLikePromises);
+
+                videoSnapshot.forEach((doc) => {
+                    const data = loadedVideos[doc.id];
+                    const statsData = statsMap[doc.id] || { views: 0, totalCommentLikes: 0 };
                     const orderText = data.order !== undefined ? ` | Порядок: ${data.order}` : '';
 
                     videosList.innerHTML += `
-                        <div class="item-card">
-                            <div class="item-info">
-                                <span class="item-title">${data.title}</span>
-                                <span class="item-meta">ID: ${doc.id}${orderText} | Тип: ${data.type || 'video'} | Категория: ${data.category}</span>
+                        <div class="item-card" style="flex-direction:column;align-items:stretch;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+                                <div class="item-info">
+                                    <span class="item-title">${data.title}</span>
+                                    <span class="item-meta">ID: ${doc.id}${orderText} | Тип: ${data.type || 'video'} | Категория: ${data.category}</span>
+                                </div>
+                                <div class="item-actions" style="flex-shrink:0;">
+                                    <button class="btn-control btn-edit" id="btn-edit-vid-${doc.id}">✎</button>
+                                    <button class="btn-control btn-del" id="btn-del-vid-${doc.id}">🗑</button>
+                                    <button class="btn-control btn-stats-toggle" id="btn-stats-${doc.id}" style="background:#7c3aed;" title="Статистика">📊</button>
+                                </div>
                             </div>
-                            <div class="item-actions">
-                                <button class="btn-control btn-edit" id="btn-edit-vid-${doc.id}">✎</button>
-                                <button class="btn-control btn-del" id="btn-del-vid-${doc.id}">🗑</button>
+                            <div class="stats-editor" id="stats-editor-${doc.id}">
+                                <div class="stats-row">
+                                    <span class="stats-label">👁️ Просмотры:</span>
+                                    <input type="number" class="stats-input" id="view-input-${doc.id}" value="${statsData.views || 0}" min="0">
+                                    <button class="btn-control" onclick="window.adjViews('${doc.id}',-1)" style="background:#dc2626;padding:4px 8px;font-size:11px;">−</button>
+                                    <button class="btn-control" onclick="window.adjViews('${doc.id}',1)" style="background:#16a34a;padding:4px 8px;font-size:11px;">+</button>
+                                    <button class="btn-apply-stats" onclick="window.saveViews('${doc.id}')">💾 Сохранить</button>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">❤️ Лайки комментов:</span>
+                                    <span style="font-size:13px;font-weight:700;color:#f472b6;" id="likes-disp-${doc.id}">${(loadedVideos[doc.id]._totalCommentLikes || 0)}</span>
+                                </div>
                             </div>
                         </div>`;
                 });
@@ -643,12 +725,90 @@
                 videoSnapshot.forEach((doc) => {
                     document.getElementById(`btn-edit-vid-${doc.id}`).onclick = () => window.startEditVideo(doc.id);
                     document.getElementById(`btn-del-vid-${doc.id}`).onclick = () => window.deleteAdminItem('videos', doc.id);
+                    const statsBtn = document.getElementById(`btn-stats-${doc.id}`);
+                    if (statsBtn) statsBtn.onclick = () => {
+                        const el = document.getElementById('stats-editor-' + doc.id);
+                        if (el) { el.classList.toggle('open'); }
+                    };
                 });
 
             } catch (error) {
                 console.error("Ошибка загрузки данных:", error);
             }
         }
+
+        // === СТАТИСТИКА ВИДЕО ===
+        window.adjViews = function(videoId, delta) {
+            const inp = document.getElementById('view-input-' + videoId);
+            if (!inp) return;
+            let v = parseInt(inp.value) || 0;
+            v = Math.max(0, v + delta);
+            inp.value = v;
+        };
+
+        window.saveViews = async function(videoId) {
+            const newViews = parseInt(document.getElementById('view-input-' + videoId).value) || 0;
+            try {
+                await updateDoc(doc(db, 'stats', videoId), { views: newViews });
+                alert("✅ Просмотры обновлены: " + newViews.toLocaleString());
+                document.getElementById('likes-disp-' + videoId).textContent = loadedVideos[videoId]?._totalCommentLikes || 0;
+            } catch (e) {
+                console.error(e);
+                alert("❌ Ошибка сохранения.");
+            }
+        };
+
+        // === ANTI-CHEAT / АНТИ-НАКРУТКА ПАНЕЛЬ ===
+        let _acDataLoaded = false;
+        window.refreshAntiCheat = async function() {
+            try {
+                const snap = await getDocs(collection(db, 'stats'));
+                if (snap.empty) return;
+                // Загружаем логи ВСЕХ видео параллельно вместо последовательных запросов
+                const logPromises = snap.docs.map(async (docSnap) => {
+                    try {
+                        const logSnap = await getDocs(collection(db, 'stats', docSnap.id, 'anti_cheat_logs'));
+                        let v = 0, r = 0;
+                        const logs = [];
+                        logSnap.forEach(l => {
+                            const t = l.data().type;
+                            const ts = l.data().ts || l.metadata.updatedTime?.seconds * 1000 || Date.now();
+                            if (t === 'rejected') { r++; } else { v++; }
+                            logs.push({ ts, reason: t === 'rejected' ? 'rejected' : 'verified_view', fp: (l.data().fp || '').slice(0,12) });
+                        });
+                        return { vid: docSnap.id, verified: v, rejected: r, logs };
+                    } catch(e) { return { vid: docSnap.id, verified: 0, rejected: 0, logs: [] }; }
+                });
+                const results = await Promise.all(logPromises);
+                let totalVerified = 0, totalRejected = 0, totalEvents = 0;
+                const allLogs = [];
+                results.forEach(r => {
+                    totalVerified += r.verified; totalRejected += r.rejected; totalEvents += r.verified + r.rejected;
+                    allLogs.push(...r.logs);
+                });
+                const rate = totalEvents > 0 ? Math.round(totalVerified / (totalVerified + totalRejected) * 100) : 100;
+                document.getElementById('ac-total-events').textContent = totalEvents;
+                document.getElementById('ac-verified').textContent = totalVerified;
+                document.getElementById('ac-rejected').textContent = totalRejected;
+                document.getElementById('ac-rate').textContent = rate + '%';
+                const badge = document.getElementById('ac-status-badge');
+                if (rate >= 90) { badge.className = 'ah-badge safe'; badge.textContent = '✅ Всё чисто'; }
+                else if (rate >= 70) { badge.className = 'ah-badge warn'; badge.textContent = '⚠️ Есть подозрения'; }
+                else { badge.className = 'ah-badge danger'; badge.textContent = '🚨 Много накрутки!'; }
+                const logEl = document.getElementById('ac-log');
+                logEl.innerHTML = '';
+                allLogs.sort((a,b) => b.ts - a.ts).slice(0,30).forEach(e => {
+                    const cls = e.reason === 'rejected' ? 'reject' : 'verify';
+                    const icon = e.reason === 'rejected' ? '🚫' : '✅';
+                    const time = new Date(e.ts).toLocaleTimeString('ru-RU', {hour:'2-digit',minute:'2-digit'});
+                    logEl.innerHTML += `<div class="ac-log-entry ${cls}"><span>${icon} ${e.reason}</span><span style="opacity:.6">${time}</span></div>`;
+                });
+                if (allLogs.length === 0) logEl.innerHTML = '<div style="font-size:11px;color:var(--card-text-muted);text-align:center;padding:10px;">Пока нет данных</div>';
+            } catch(e) { console.error('AC load error:', e); }
+        };
+
+        // Автообновление анти-чита каждые 30 сек
+        setInterval(() => { if (_acDataLoaded) window.refreshAntiCheat(); }, 30000);
 
         window.toggleUserRole = async function(userId, currentRole) {
             const newRole = currentRole === 'admin' ? 'user' : 'admin';
@@ -713,6 +873,11 @@
             document.getElementById('video-desc').value = video.desc !== "Описание отсутствует..." ? (video.desc || "") : "";
             document.getElementById('video-src').value = video.src || "Инсаф Студио";
 
+            // Заполняем статистику видео (просмотры/лайки)
+            const statsData = video._stats || {};
+            document.getElementById('video-views').value = statsData.views || 0;
+            document.getElementById('video-likes').value = statsData.likes || 0;
+
             document.getElementById('video-form-title').innerText = "📝 Редактирование видео";
             document.getElementById('publish-btn').innerText = "💾 Сохранить изменения";
             document.getElementById('cancel-video-edit-btn').style.display = "inline-flex";
@@ -729,6 +894,8 @@
             document.getElementById('video-type').value = "video";
             document.getElementById('video-desc').value = "";
             document.getElementById('video-src').value = "Инсаф Студио";
+            document.getElementById('video-views').value = 0;
+            document.getElementById('video-likes').value = 0;
 
             document.getElementById('video-form-title').innerText = "🎬 Добавить новое видео";
             document.getElementById('publish-btn').innerText = "🚀 Опубликовать на сайт";
@@ -782,6 +949,8 @@
             const type = document.getElementById('video-type').value;
             const desc = document.getElementById('video-desc').value.trim();
             const src = document.getElementById('video-src').value.trim();
+            const viewsVal = parseInt(document.getElementById('video-views').value) || 0;
+            const likesVal = parseInt(document.getElementById('video-likes').value) || 0;
 
             if (!title || !url) return alert("Заполни название и ссылку!");
 
@@ -796,6 +965,8 @@
 
             try {
                 this.disabled = true;
+                let savedVideoId = null;
+
                 if (editingVideoId) {
                     if (customId && customId !== editingVideoId) {
                         const newRef = doc(db, "videos", customId);
@@ -807,10 +978,11 @@
                         }
                         await setDoc(newRef, videoData);
                         await deleteDoc(doc(db, "videos", editingVideoId));
+                        savedVideoId = customId;
                     } else {
                         await updateDoc(doc(db, "videos", editingVideoId), videoData);
+                        savedVideoId = editingVideoId;
                     }
-                    resetVideoForm();
                 } else {
                     if (customId) {
                         const targetRef = doc(db, "videos", customId);
@@ -821,14 +993,29 @@
                             return;
                         }
                         await setDoc(targetRef, videoData);
+                        savedVideoId = customId;
                     } else {
-                        await addDoc(collection(db, "videos"), videoData);
+                        const newRef = await addDoc(collection(db, "videos"), videoData);
+                        savedVideoId = newRef.id;
                     }
-                    resetVideoForm();
                 }
+
+                // Сохраняем статистику видео (просмотры/лайки)
+                if (savedVideoId) {
+                    const statsRef = doc(db, 'stats', savedVideoId);
+                    const statsSnap = await getDoc(statsRef);
+                    const statsData = {};
+                    if (statsSnap.exists()) Object.assign(statsData, statsSnap.data());
+                    statsData.views = viewsVal;
+                    statsData.likes = likesVal;
+                    await setDoc(statsRef, statsData, { merge: true });
+                }
+
+                resetVideoForm();
                 alert("Успешно сохранено!");
                 await loadAdminData();
             } catch (error) {
+                console.error(error);
                 alert("Ошибка сохранения.");
             } finally {
                 this.disabled = false;
